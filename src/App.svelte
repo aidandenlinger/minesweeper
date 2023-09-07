@@ -1,9 +1,9 @@
 <script lang="ts">
+  import Navbar from './Navbar.svelte';
 </script>
 
-<main>
-  <p>hi</p>
-</main>
+<Navbar />
 
-<style>
-</style>
+<main>
+  <p>tbd</p>
+</main>
