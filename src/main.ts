@@ -1,5 +1,5 @@
 import '@picocss/pico/css/pico.min.css'
-import App from './App.svelte'
+import App from './frontend/App.svelte'
 
 const appElement = document.getElementById('app')
 
