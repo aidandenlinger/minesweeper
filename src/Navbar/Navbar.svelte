@@ -46,7 +46,6 @@
 			// Init switchers
 			initSwitchers() {
 				const buttons = document.querySelectorAll(this.buttonsTarget);
-				console.debug(buttons);
 				buttons.forEach((button) => {
 					button.addEventListener(
 						"click",
