@@ -12,7 +12,7 @@ export function create(width: number, height: number, _mineCount: number): GameS
   }
 }
 
-export function click(state: GameState, x: number, y: number) {
+export function click(state: GameState, x: number, y: number): GameState {
   if (x < 0 || x > state.game.length) {
     throw new Error("X out of bounds")
   }
