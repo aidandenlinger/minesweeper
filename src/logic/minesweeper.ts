@@ -1,3 +1,5 @@
+import { createHiddenGrid } from "./gridGeneration"
+
 export type GameState = {
   game: Cell[][],
 }
@@ -5,17 +7,8 @@ export type GameState = {
 export type Cell = { "status": "hidden" } | { "status": "open" } | { "status": "mine" }
 
 export function create(width: number, height: number, _mineCount: number): GameState {
-  const hiddenGrid: Cell[][] = new Array(width)
-
-  for (let i = 0; i < width; ++i) {
-    hiddenGrid[i] = new Array(height)
-    for (let j = 0; j < height; ++j) {
-      hiddenGrid[i][j] = { "status": "hidden" }
-    }
-  }
-
   return {
-    game: hiddenGrid
+    game: createHiddenGrid(width, height)
   }
 }
 
