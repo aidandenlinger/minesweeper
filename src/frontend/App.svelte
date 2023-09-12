@@ -3,7 +3,7 @@
   import { create, click } from "../logic/minesweeper";
   import Cell from "./Cell.svelte";
 
-  let gameState = create(9, 9, 30);
+  let gameState = create(9, 9, 10);
 </script>
 
 <Navbar />
