@@ -16,3 +16,34 @@ export function createHiddenGrid(width: number, height: number): Cell[][] {
 
   return hiddenGrid
 }
+
+export function createGrid(width: number, height: number, mineCount: number): Cell[][] {
+  if (mineCount > width * height) {
+    throw new Error("More mines than grid size!")
+  }
+
+  // First, we need all grid coordinates
+  const coordinates: number[][] = new Array()
+
+  for (let x = 0; x < width; ++x) {
+    for (let y = 0; y < height; ++y) {
+      coordinates.push([x, y])
+    }
+  }
+
+  // Next, shuffle the array
+  // https://stackoverflow.com/a/12646864
+  for (let i = coordinates.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = coordinates[i];
+    coordinates[i] = coordinates[j];
+    coordinates[j] = temp;
+  }
+
+  // Now, take mineCount number of elements and we have our mine locations!
+  const mineCoords = coordinates.slice(0, mineCount)
+
+  console.log(mineCoords)
+
+  return [];
+}
