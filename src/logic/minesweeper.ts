@@ -28,8 +28,8 @@ export function click(state: GameState, x: number, y: number): GameState {
   switch (state.game[x][y].status) {
     case "hidden":
       // TODO: check if mine and end game accordingly
-      console.debug(`Clicked on hidden ${x} ${y}, setting to open`)
-      state.game[x][y] = { status: "open" }
+      console.debug(`Clicked on hidden ${x} ${y}`)
+      state.game[x][y] = gameSolution[x][y]
       break
     case "open":
       console.debug(`Clicked on revealed square ${x} ${y}, doing nothing`)
