@@ -22,6 +22,27 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
     throw new Error("More mines than grid size!")
   }
 
+  // Fill grid with all open cells
+  const grid = new Array(width)
+
+  for (let i = 0; i < width; ++i) {
+    grid[i] = new Array(height)
+    for (let j = 0; j < height; ++j) {
+      grid[i][j] = { "status": "open" }
+    }
+  }
+
+  // get and set mine coordinates
+  const mineCoords = getMineCoordinates(width, height, mineCount)
+
+  mineCoords.forEach(([x, y]) => {
+    grid[x][y] = { "status": "mine" }
+  })
+
+  return grid;
+}
+
+function getMineCoordinates(width: number, height: number, mineCount: number): number[][] {
   // First, we need all grid coordinates
   const coordinates: number[][] = new Array()
 
@@ -41,9 +62,5 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
   }
 
   // Now, take mineCount number of elements and we have our mine locations!
-  const mineCoords = coordinates.slice(0, mineCount)
-
-  console.log(mineCoords)
-
-  return [];
+  return coordinates.slice(0, mineCount)
 }
