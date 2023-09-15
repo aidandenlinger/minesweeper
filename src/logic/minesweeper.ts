@@ -1,4 +1,4 @@
-import type { Cell } from "./Cell"
+import type { Cell, Coord } from "./Cell"
 import { createGrid, createHiddenGrid } from "./gridGeneration"
 
 export type GameState = {
@@ -15,23 +15,23 @@ export function create(width: number, height: number, mineCount: number): GameSt
   return { game: createHiddenGrid(width, height), width, height }
 }
 
-export function click(state: GameState, row: number, col: number): GameState {
+export function click(state: GameState, { row, column }: Coord): GameState {
   if (row < 0 || row > state.height) {
     throw new Error("X out of bounds")
   }
 
-  if (col < 0 || col > state.width) {
+  if (column < 0 || column > state.width) {
     throw new Error("Y out of bounds")
   }
 
-  switch (state.game[row][col].status) {
+  switch (state.game[row][column].status) {
     case "hidden":
       // TODO: check if mine and end game accordingly
-      console.debug(`Clicked on hidden ${row} ${col}`)
-      state.game[row][col] = gameSolution[row][col]
+      console.debug(`Clicked on hidden ${row} ${column}`)
+      state.game[row][column] = gameSolution[row][column]
       break
     case "open":
-      console.debug(`Clicked on revealed square ${row} ${col}, doing nothing`)
+      console.debug(`Clicked on revealed square ${row} ${column}, doing nothing`)
       break
     case "mine":
       throw new Error(("Clicked on mine? Game should already be over"))
@@ -40,6 +40,6 @@ export function click(state: GameState, row: number, col: number): GameState {
   return state
 }
 
-export function flag(state: GameState, row: number, col: number) { }
+export function flag(state: GameState, { row, column }: Coord) { }
 
-export function reveal(state: GameState, row: number, col: number) { }
+export function reveal(state: GameState, { row, column }: Coord) { }

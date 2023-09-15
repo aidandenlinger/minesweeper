@@ -1,16 +1,16 @@
 <script lang="ts">
-  import type { Cell } from "../logic/minesweeper";
+  import type { Coord, Cell } from "../logic/Cell";
   import { createEventDispatcher } from "svelte";
 
   export let cell: Cell;
-  export let x: number;
-  export let y: number;
+  export let coord: Coord;
+  let {row, column} = coord;
 
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="cell {cell.status}" on:click={dispatch("clicked", { x: x, y: y })}>
-  {x},{y}
+<div class="cell {cell.status}" on:click={dispatch("clicked", coord)}>
+  {row},{column}
 </div>
 
 <style>

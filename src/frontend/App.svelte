@@ -9,14 +9,13 @@
 <Navbar />
 
 <main class="game">
-  {#each gameState.game as row, x}
+  {#each gameState.game as rowArr, row}
     <div class="row">
-      {#each row as cell, y}
+      {#each rowArr as cell, column}
         <Cell
           {cell}
-          {x}
-          {y}
-          on:clicked={(e) => gameState = click(gameState, e.detail.x, e.detail.y)}
+          coord={{ row, column }}
+          on:clicked={(e) => (gameState = click(gameState, e.detail))}
         />
       {/each}
     </div>
