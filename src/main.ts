@@ -3,7 +3,7 @@ import App from './frontend/App.svelte'
 
 const appElement = document.getElementById('app')
 
-if (appElement == null) {
+if (appElement === null) {
   throw new Error("No html element with id 'app'!")
 }
 

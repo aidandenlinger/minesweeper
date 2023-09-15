@@ -7,7 +7,7 @@ export function* neighbor(width: number, height: number, { row, column }: Coord)
 
     for (let neighCol = column - 1; neighCol <= column + 1; ++neighCol) {
       if (neighCol < 0 || neighCol >= width) continue;
-      if (neighRow == row && neighCol == column) continue;
+      if (neighRow === row && neighCol === column) continue;
 
       yield { row: neighRow, column: neighCol };
     }
