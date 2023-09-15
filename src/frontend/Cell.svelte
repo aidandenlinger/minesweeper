@@ -13,7 +13,7 @@
 </script>
 
 <button class="cell {cell.status}" on:click={handleClick}>
-  {#if cell.status === "open"}
+  {#if cell.status === "open" && cell.adjMines !== 0}
     {cell.adjMines}
   {/if}
 </button>
