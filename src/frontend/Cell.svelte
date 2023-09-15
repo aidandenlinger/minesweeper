@@ -4,7 +4,6 @@
 
   export let cell: Cell;
   export let coord: Coord;
-  let { row, column } = coord;
 
   const dispatch = createEventDispatcher();
 
@@ -14,7 +13,9 @@
 </script>
 
 <button class="cell {cell.status}" on:click={handleClick}>
-  {row},{column}
+  {#if cell.status === "open"}
+    {cell.adjMines}
+  {/if}
 </button>
 
 <style>

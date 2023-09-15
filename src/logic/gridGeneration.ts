@@ -1,4 +1,4 @@
-import type { Cell, Coord } from './Cell'
+import { neighbor, type Cell, type Coord } from './Cell'
 
 /**
  * Generates a grid of all hidden Cells. Used as the start state for the
@@ -23,20 +23,33 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
   }
 
   // Fill grid with all open cells
-  const grid = new Array(height)
+  const grid: Cell[][] = new Array(height)
 
   for (let row = 0; row < height; ++row) {
     grid[row] = new Array(width)
-    for (let col = 0; col < width; ++col) {
-      grid[row][col] = { "status": "open" }
+    for (let column = 0; column < width; ++column) {
+      // Initial value of open cell with 0 adjacent mines
+      grid[row][column] = { "status": "open", adjMines: 0 }
     }
   }
 
   // get and set mine coordinates
   const mineCoords = getMineCoordinates(width, height, mineCount)
 
-  mineCoords.forEach(({row, column}) => {
+  mineCoords.forEach(({ row, column }) => {
     grid[row][column] = { "status": "mine" }
+    console.log(`mine: ${row} ${column}`)
+  })
+
+  mineCoords.forEach((mine) => {
+    for (let nCoords of neighbor(width, height, mine)) {
+      console.log(`${JSON.stringify(nCoords)}`)
+      let n = grid[nCoords.row][nCoords.column];
+      if (n.status == "open") {
+        n.adjMines += 1;
+        // console.log(`${JSON.stringify(n)} ${JSON.stringify(nCoords)}`)
+      }
+    }
   })
 
   return grid;
@@ -48,7 +61,7 @@ function getMineCoordinates(width: number, height: number, mineCount: number): C
 
   for (let row = 0; row < height; ++row) {
     for (let column = 0; column < width; ++column) {
-      coordinates.push({row, column})
+      coordinates.push({ row, column })
     }
   }
 
