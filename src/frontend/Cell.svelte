@@ -27,4 +27,8 @@
   .open {
     background-color: white;
   }
+
+  .mine {
+    background-color: black;
+  }
 </style>
