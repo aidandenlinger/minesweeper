@@ -41,8 +41,8 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
   })
 
   mineCoords.forEach((mine) => {
-    for (let nCoords of neighbor(width, height, mine)) {
-      let n = grid[nCoords.row][nCoords.column];
+    for (let {row, column} of neighbor(width, height, mine)) {
+      let n = grid[row][column];
       if (n.status === "open") {
         n.adjMines += 1;
       }
