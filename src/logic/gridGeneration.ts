@@ -5,7 +5,7 @@ import type { Cell, Coord } from './Cell'
  * frontend.
  */
 export function createHiddenGrid(width: number, height: number): Cell[][] {
-  const hiddenGrid: Cell[][] = new Array(width)
+  const hiddenGrid: Cell[][] = new Array(height)
 
   for (let row = 0; row < height; ++row) {
     hiddenGrid[row] = new Array(width)
@@ -23,10 +23,10 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
   }
 
   // Fill grid with all open cells
-  const grid = new Array(width)
+  const grid = new Array(height)
 
   for (let row = 0; row < height; ++row) {
-    grid[row] = new Array(height)
+    grid[row] = new Array(width)
     for (let col = 0; col < width; ++col) {
       grid[row][col] = { "status": "open" }
     }
