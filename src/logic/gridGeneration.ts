@@ -1,4 +1,4 @@
-import type { Cell } from './minesweeper'
+import type { Cell } from './Cell'
 
 /**
  * Generates a grid of all hidden Cells. Used as the start state for the

@@ -1,19 +1,18 @@
+import type { Cell } from "./Cell"
 import { createGrid, createHiddenGrid } from "./gridGeneration"
 
 export type GameState = {
   game: Cell[][],
+  width: number,
+  height: number
 }
-
-export type Cell = { "status": "hidden" } | { "status": "open" } | { "status": "mine" }
 
 let gameSolution: Cell[][]
 
 export function create(width: number, height: number, mineCount: number): GameState {
   gameSolution = createGrid(width, height, mineCount)
-  
-  return {
-    game: createHiddenGrid(width, height)
-  }
+
+  return { game: createHiddenGrid(width, height), width, height }
 }
 
 export function click(state: GameState, x: number, y: number): GameState {
