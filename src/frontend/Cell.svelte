@@ -13,15 +13,18 @@
   }
 </script>
 
-<div class="cell {cell.status}" on:click={handleClick}>
+<button class="cell {cell.status}" on:click={handleClick}>
   {row},{column}
-</div>
+</button>
 
 <style>
   .cell {
     width: 3rem;
     height: 3rem;
     border: solid 0.3rem darkgray;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
   }
 
   .hidden {
