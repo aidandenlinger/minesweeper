@@ -7,9 +7,13 @@
   let {row, column} = coord;
 
   const dispatch = createEventDispatcher();
+
+  function handleClick() {
+    dispatch("clicked", coord)
+  }
 </script>
 
-<div class="cell {cell.status}" on:click={dispatch("clicked", coord)}>
+<div class="cell {cell.status}" on:click={handleClick}>
   {row},{column}
 </div>
 
