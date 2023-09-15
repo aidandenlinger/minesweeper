@@ -78,6 +78,13 @@ function isEmpty(coord: Coord): boolean {
   return cell.status === "open" && cell.adjMines === 0
 }
 
-export function flag(state: GameState, { row, column }: Coord) { }
+export function flag(state: GameState, { row, column }: Coord): GameState {
+  let cell = state.game[row][column]
+  if (cell.status == "hidden") {
+    // Flip it, so flags can be removed or added
+    cell.flagged = !cell.flagged
+  }
+  return state
+}
 
 export function reveal(state: GameState, { row, column }: Coord) { }

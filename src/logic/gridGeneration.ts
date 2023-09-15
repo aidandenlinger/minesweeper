@@ -10,7 +10,7 @@ export function createHiddenGrid(width: number, height: number): Cell[][] {
   for (let row = 0; row < height; ++row) {
     hiddenGrid[row] = new Array(width)
     for (let col = 0; col < width; ++col) {
-      hiddenGrid[row][col] = { "status": "hidden" }
+      hiddenGrid[row][col] = { "status": "hidden", flagged: false }
     }
   }
 
