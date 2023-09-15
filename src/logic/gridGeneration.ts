@@ -1,4 +1,4 @@
-import type { Cell } from './Cell'
+import type { Cell, Coord } from './Cell'
 
 /**
  * Generates a grid of all hidden Cells. Used as the start state for the
@@ -7,10 +7,10 @@ import type { Cell } from './Cell'
 export function createHiddenGrid(width: number, height: number): Cell[][] {
   const hiddenGrid: Cell[][] = new Array(width)
 
-  for (let i = 0; i < width; ++i) {
-    hiddenGrid[i] = new Array(height)
-    for (let j = 0; j < height; ++j) {
-      hiddenGrid[i][j] = { "status": "hidden" }
+  for (let row = 0; row < height; ++row) {
+    hiddenGrid[row] = new Array(width)
+    for (let col = 0; col < width; ++col) {
+      hiddenGrid[row][col] = { "status": "hidden" }
     }
   }
 
@@ -25,30 +25,30 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
   // Fill grid with all open cells
   const grid = new Array(width)
 
-  for (let i = 0; i < width; ++i) {
-    grid[i] = new Array(height)
-    for (let j = 0; j < height; ++j) {
-      grid[i][j] = { "status": "open" }
+  for (let row = 0; row < height; ++row) {
+    grid[row] = new Array(height)
+    for (let col = 0; col < width; ++col) {
+      grid[row][col] = { "status": "open" }
     }
   }
 
   // get and set mine coordinates
   const mineCoords = getMineCoordinates(width, height, mineCount)
 
-  mineCoords.forEach(([x, y]) => {
-    grid[x][y] = { "status": "mine" }
+  mineCoords.forEach(({row, column}) => {
+    grid[row][column] = { "status": "mine" }
   })
 
   return grid;
 }
 
-function getMineCoordinates(width: number, height: number, mineCount: number): number[][] {
+function getMineCoordinates(width: number, height: number, mineCount: number): Coord[] {
   // First, we need all grid coordinates
-  const coordinates: number[][] = new Array()
+  const coordinates: Coord[] = new Array()
 
-  for (let x = 0; x < width; ++x) {
-    for (let y = 0; y < height; ++y) {
-      coordinates.push([x, y])
+  for (let row = 0; row < height; ++row) {
+    for (let column = 0; column < width; ++column) {
+      coordinates.push({row, column})
     }
   }
 

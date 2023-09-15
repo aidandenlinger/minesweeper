@@ -15,23 +15,23 @@ export function create(width: number, height: number, mineCount: number): GameSt
   return { game: createHiddenGrid(width, height), width, height }
 }
 
-export function click(state: GameState, x: number, y: number): GameState {
-  if (x < 0 || x > state.game.length) {
+export function click(state: GameState, row: number, col: number): GameState {
+  if (row < 0 || row > state.height) {
     throw new Error("X out of bounds")
   }
 
-  if (y < 0 || y > state.game[0].length) {
+  if (col < 0 || col > state.width) {
     throw new Error("Y out of bounds")
   }
 
-  switch (state.game[x][y].status) {
+  switch (state.game[row][col].status) {
     case "hidden":
       // TODO: check if mine and end game accordingly
-      console.debug(`Clicked on hidden ${x} ${y}`)
-      state.game[x][y] = gameSolution[x][y]
+      console.debug(`Clicked on hidden ${row} ${col}`)
+      state.game[row][col] = gameSolution[row][col]
       break
     case "open":
-      console.debug(`Clicked on revealed square ${x} ${y}, doing nothing`)
+      console.debug(`Clicked on revealed square ${row} ${col}, doing nothing`)
       break
     case "mine":
       throw new Error(("Clicked on mine? Game should already be over"))
@@ -40,6 +40,6 @@ export function click(state: GameState, x: number, y: number): GameState {
   return state
 }
 
-export function flag(state: GameState, x: number, y: number) { }
+export function flag(state: GameState, row: number, col: number) { }
 
-export function reveal(state: GameState, x: number, y: number) { }
+export function reveal(state: GameState, row: number, col: number) { }
