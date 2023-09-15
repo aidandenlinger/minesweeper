@@ -4,12 +4,12 @@
 
   export let cell: Cell;
   export let coord: Coord;
-  let {row, column} = coord;
+  let { row, column } = coord;
 
   const dispatch = createEventDispatcher();
 
   function handleClick() {
-    dispatch("clicked", coord)
+    dispatch("clicked", coord);
   }
 </script>
 
