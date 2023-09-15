@@ -38,16 +38,13 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
 
   mineCoords.forEach(({ row, column }) => {
     grid[row][column] = { "status": "mine" }
-    console.log(`mine: ${row} ${column}`)
   })
 
   mineCoords.forEach((mine) => {
     for (let nCoords of neighbor(width, height, mine)) {
-      console.log(`${JSON.stringify(nCoords)}`)
       let n = grid[nCoords.row][nCoords.column];
       if (n.status === "open") {
         n.adjMines += 1;
-        // console.log(`${JSON.stringify(n)} ${JSON.stringify(nCoords)}`)
       }
     }
   })

@@ -4,7 +4,7 @@
   import { create, click } from "../logic/minesweeper";
   import Cell from "./Cell.svelte";
 
-  let gameState = create(5, 7, 1);
+  let gameState = create(5, 7, 9);
 
   function clickCell(e: CustomEvent<Coord>) {
     gameState = click(gameState, e.detail);

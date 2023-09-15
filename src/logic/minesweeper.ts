@@ -27,11 +27,9 @@ export function click(state: GameState, { row, column }: Coord): GameState {
   switch (state.game[row][column].status) {
     case "hidden":
       // TODO: check if mine and end game accordingly
-      console.debug(`Clicked on hidden ${row} ${column}`)
       state.game[row][column] = gameSolution[row][column]
       break
     case "open":
-      console.debug(`Clicked on revealed square ${row} ${column}, doing nothing`)
       break
     case "mine":
       throw new Error(("Clicked on mine? Game should already be over"))
