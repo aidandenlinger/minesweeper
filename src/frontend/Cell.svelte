@@ -39,4 +39,13 @@
   .mine {
     background-color: black;
   }
+
+  /**
+   * Remove focus styles for non-keyboard focus.
+   * https://stackoverflow.com/a/60219624
+   */
+  :focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+  }
 </style>
