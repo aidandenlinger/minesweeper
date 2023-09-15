@@ -33,6 +33,7 @@
 
   .open {
     background-color: white;
+    color: black;
   }
 
   .mine {
