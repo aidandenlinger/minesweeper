@@ -29,8 +29,11 @@ export function click(state: GameState, { row, column }: Coord): GameState {
     throw new Error("Y out of bounds")
   }
 
-  switch (state.game[row][column].status) {
+  let cell = state.game[row][column]
+  
+  switch (cell.status) {
     case "hidden":
+      if (cell.flagged) break; // Don't allow clicking flagged squares
       if (isEmpty({ row, column })) {
         // this is an empty cell, so it's impossible to lose
         clickEmptyCell(state, { row, column })
