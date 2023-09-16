@@ -21,7 +21,7 @@
 >
   <hgroup>
     <h3>Intermediate</h3>
-    <p>(9x9, 10 mines)</p>
+    <p>(16x16, 40 mines)</p>
   </hgroup>
 </button>
 

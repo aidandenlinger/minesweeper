@@ -93,6 +93,7 @@
   .winText {
     font-size: 4rem;
     text-align: center;
+    margin: 0;
   }
 
   .restartBtns > button {
