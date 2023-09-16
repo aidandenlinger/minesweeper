@@ -72,13 +72,13 @@
           ))}
         in:fade={{ delay: 400, duration: 1000 }}
       >
-        Restart (Same Difficulty)?
+        Restart (Same Difficulty)
       </button>
       <button
         on:click={() => (gameState = null)}
         in:fade={{ delay: 400, duration: 1000 }}
       >
-        Restart (New Difficulty)?
+        Restart (New Difficulty)
       </button>
     </div>
   {/if}
