@@ -29,8 +29,8 @@
 
 <style>
   .cell {
-    width: 3rem;
-    height: 3rem;
+    aspect-ratio: 1;
+    max-width: 2.5rem;
     border: solid 0.3rem darkgray;
     margin: 0;
     padding: 0;

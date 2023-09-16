@@ -26,12 +26,12 @@
 </button>
 
 <button
-  on:click={() => dispatch("setup", { width: 16, height: 30, mineCount: 99 })}
+  on:click={() => dispatch("setup", { width: 30, height: 16, mineCount: 99 })}
   in:fade
 >
   <hgroup>
     <h3>Advanced</h3>
-    <p>(16x30, 99 mines)</p>
+    <p>(30x16, 99 mines)</p>
   </hgroup>
 </button>
 
