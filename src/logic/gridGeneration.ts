@@ -36,18 +36,18 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
   // get and set mine coordinates
   const mineCoords = getMineCoordinates(width, height, mineCount)
 
-  mineCoords.forEach(({ row, column }) => {
+  for (let { row, column } of mineCoords) {
     grid[row][column] = { "status": "mine" }
-  })
+  }
 
-  mineCoords.forEach((mine) => {
-    for (let {row, column} of neighbor(width, height, mine)) {
+  for (let mine of mineCoords) {
+    for (let { row, column } of neighbor(width, height, mine)) {
       let n = grid[row][column];
       if (n.status === "open") {
         n.adjMines += 1;
       }
     }
-  })
+  }
 
   return grid;
 }
