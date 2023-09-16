@@ -1,8 +1,11 @@
 import { neighbor, type Cell, type Coord } from "./Cell"
 import { createGrid, createHiddenGrid } from "./gridGeneration"
 
+export type Status = "playing" | "lost" | "won"
+
 export type GameState = {
   game: Cell[][],
+  status: Status,
   width: number,
   height: number
 }
@@ -12,7 +15,7 @@ let gameSolution: Cell[][]
 export function create(width: number, height: number, mineCount: number): GameState {
   gameSolution = createGrid(width, height, mineCount)
 
-  return { game: createHiddenGrid(width, height), width, height }
+  return { game: createHiddenGrid(width, height), status: "playing", width, height }
 }
 
 export function click(state: GameState, { row, column }: Coord): GameState {
@@ -26,11 +29,14 @@ export function click(state: GameState, { row, column }: Coord): GameState {
 
   switch (state.game[row][column].status) {
     case "hidden":
-      // TODO: check if mine and end game accordingly
       if (isEmpty({ row, column })) {
+        // this is an empty cell, so it's impossible to lose
         clickEmptyCell(state, { row, column })
       } else {
         state.game[row][column] = gameSolution[row][column]
+        if (gameSolution[row][column].status === "mine") {
+          state.status = "lost"
+        }
       }
       break
     case "open":
