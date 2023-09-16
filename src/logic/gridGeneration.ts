@@ -17,7 +17,7 @@ export function createHiddenGrid(width: number, height: number): Cell[][] {
   return hiddenGrid
 }
 
-export function createGrid(width: number, height: number, mineCount: number): Cell[][] {
+export function createGrid(width: number, height: number, mineCount: number): [Cell[][], Coord[]] {
   if (mineCount > width * height) {
     throw new Error("More mines than grid size!")
   }
@@ -49,7 +49,7 @@ export function createGrid(width: number, height: number, mineCount: number): Ce
     }
   }
 
-  return grid;
+  return [grid, mineCoords];
 }
 
 function getMineCoordinates(width: number, height: number, mineCount: number): Coord[] {

@@ -12,9 +12,10 @@ export type GameState = {
 }
 
 let gameSolution: Cell[][]
+let mineCoords: Coord[]
 
 export function create(width: number, height: number, mineCount: number): GameState {
-  gameSolution = createGrid(width, height, mineCount)
+  [gameSolution, mineCoords] = createGrid(width, height, mineCount)
 
   return { game: createHiddenGrid(width, height), status: "playing", width, height, mineCount }
 }
@@ -36,6 +37,10 @@ export function click(state: GameState, { row, column }: Coord): GameState {
       } else {
         state.game[row][column] = gameSolution[row][column]
         if (gameSolution[row][column].status === "mine") {
+          // reveal all mines
+          for (let { row, column } of mineCoords) {
+            state.game[row][column] = gameSolution[row][column]
+          }
           state.status = "lost"
         }
       }
