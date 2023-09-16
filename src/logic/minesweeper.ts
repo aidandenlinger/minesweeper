@@ -71,6 +71,7 @@ function clickEmptyCell(state: GameState, start: Coord): GameState {
 
   // Insert at start of array, remove from end of array
   let queue = [start]
+  let visited = new Set([start])
 
   while (queue.length !== 0) {
     // Will not be undefined, as we just checked length
@@ -81,9 +82,14 @@ function clickEmptyCell(state: GameState, start: Coord): GameState {
       // reveal cell
       state.game[row][column] = gameSolution[row][column]
 
+      if (!isEmpty({ row, column })) continue;
+
       // Enqueue neighbors if empty
-      if (isEmpty({ row, column })) {
-        queue.unshift(...neighbor(state.width, state.height, { row, column }))
+      for (let n of neighbor(state.width, state.height, { row, column })) {
+        if (!visited.has(n)) {
+          queue.unshift(n)
+          visited.add(n)
+        }
       }
     }
   }
