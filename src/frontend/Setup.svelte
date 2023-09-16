@@ -14,6 +14,6 @@
   in:fade>Intermediate</button
 >
 <button
-  on:click={() => dispatch("setup", { width: 30, height: 16, mineCount: 99 })}
+  on:click={() => dispatch("setup", { width: 16, height: 30, mineCount: 99 })}
   in:fade>Advanced</button
 >
