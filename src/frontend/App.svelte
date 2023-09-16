@@ -1,20 +1,31 @@
 <script lang="ts">
+  import Setup from "./Setup.svelte"
   import Navbar from "../Navbar/Navbar.svelte";
   import type { Coord } from "../logic/Cell";
-  import { create, click, flag } from "../logic/minesweeper";
+  import { create, click, flag, type GameState } from "../logic/minesweeper";
   import Cell from "./Cell.svelte";
   import { fade } from "svelte/transition";
 
-  let gameState = create(9, 9, 10);
+  type GameConditions = {
+    width: number,
+    height: number,
+    mineCount: number
+  }
+
+  let gameState : GameState | null;
+
+  function createGame(e: CustomEvent<GameConditions>) {
+    gameState = create(e.detail.width, e.detail.height, e.detail.mineCount)  
+  }
 
   function clickCell(e: CustomEvent<Coord>) {
-    if (gameState.status === "playing") {
+    if (gameState && gameState.status === "playing") {
       gameState = click(gameState, e.detail);
     }
   }
 
   function rightClickCell(e: CustomEvent<Coord>) {
-    if (gameState.status === "playing") {
+    if (gameState && gameState.status === "playing") {
       gameState = flag(gameState, e.detail);
     }
   }
@@ -23,31 +34,36 @@
 <Navbar />
 
 <main>
-  <div class="game">
-    {#each gameState.game as rowArr, row}
-      <div class="row">
-        {#each rowArr as cell, column}
-          <Cell
-            {cell}
-            coord={{ row, column }}
-            on:clicked={clickCell}
-            on:rightclicked={rightClickCell}
-          />
-        {/each}
-      </div>
-    {/each}
-  </div>
+  {#if !gameState}
+    <Setup on:setup={createGame} />
+  {/if}
 
-  {#if gameState.status === "won"}
+  {#if gameState}
+    <div class="game" in:fade>
+      {#each gameState.game as rowArr, row}
+        <div class="row">
+          {#each rowArr as cell, column}
+            <Cell
+              {cell}
+              coord={{ row, column }}
+              on:clicked={clickCell}
+              on:rightclicked={rightClickCell}
+            />
+          {/each}
+        </div>
+      {/each}
+    </div>
+  {/if}
+
+  {#if gameState && gameState.status === "won"}
     <p class="winText" in:fade out:fade>Nice Minesweepin', kid.</p>
   {/if}
 
-  {#if gameState.status === "lost" || gameState.status === "won"}
+  {#if gameState && (gameState.status === "lost" || gameState.status === "won")}
     <button
       class="restartBtn"
-      on:click={() => (gameState = create(9, 9, 10))}
+      on:click={() => (gameState = null)}
       in:fade={{ delay: 400, duration: 1000 }}
-      out:fade
     >
       Restart?
     </button>
