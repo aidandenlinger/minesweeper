@@ -38,7 +38,11 @@
     {/each}
   </div>
 
-  {#if gameState.status === "lost"}
+  {#if gameState.status === "won"}
+    <p class="winText" in:fade out:fade>Nice Minesweepin', kid.</p>
+  {/if}
+
+  {#if gameState.status === "lost" || gameState.status === "won"}
     <button
       class="restartBtn"
       on:click={() => (gameState = create(9, 9, 10))}
@@ -59,5 +63,10 @@
   .restartBtn {
     margin-bottom: 0;
     margin-top: 1rem;
+  }
+
+  .winText {
+    font-size: 4rem;
+    text-align: center;
   }
 </style>

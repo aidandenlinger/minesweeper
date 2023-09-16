@@ -7,7 +7,8 @@ export type GameState = {
   game: Cell[][],
   status: Status,
   width: number,
-  height: number
+  height: number,
+  mineCount: number
 }
 
 let gameSolution: Cell[][]
@@ -15,7 +16,7 @@ let gameSolution: Cell[][]
 export function create(width: number, height: number, mineCount: number): GameState {
   gameSolution = createGrid(width, height, mineCount)
 
-  return { game: createHiddenGrid(width, height), status: "playing", width, height }
+  return { game: createHiddenGrid(width, height), status: "playing", width, height, mineCount }
 }
 
 export function click(state: GameState, { row, column }: Coord): GameState {
@@ -45,7 +46,18 @@ export function click(state: GameState, { row, column }: Coord): GameState {
       throw new Error(("Clicked on mine? Game should already be over"))
   }
 
+  if (isWin(state)) {
+    state.status = "won"
+  }
+
   return state
+}
+
+function isWin(state: GameState): boolean {
+  // Is every cell open besides the mines?
+  return state.game.flat().reduce((totalOpen, c) =>
+    c.status === "open" ? totalOpen + 1 : totalOpen, 0)
+    === state.width * state.height - state.mineCount
 }
 
 /**
