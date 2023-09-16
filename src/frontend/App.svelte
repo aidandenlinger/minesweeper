@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Setup from "./Setup.svelte"
+  import Setup from "./Setup.svelte";
   import Navbar from "../Navbar/Navbar.svelte";
   import type { Coord } from "../logic/Cell";
   import { create, click, flag, type GameState } from "../logic/minesweeper";
@@ -7,15 +7,17 @@
   import { fade } from "svelte/transition";
 
   type GameConditions = {
-    width: number,
-    height: number,
-    mineCount: number
-  }
+    width: number;
+    height: number;
+    mineCount: number;
+  };
 
-  let gameState : GameState | null;
+  let gameState: GameState | null;
+  let lastSettings: GameConditions;
 
   function createGame(e: CustomEvent<GameConditions>) {
-    gameState = create(e.detail.width, e.detail.height, e.detail.mineCount)  
+    lastSettings = e.detail;
+    gameState = create(e.detail.width, e.detail.height, e.detail.mineCount);
   }
 
   function clickCell(e: CustomEvent<Coord>) {
@@ -60,13 +62,25 @@
   {/if}
 
   {#if gameState && (gameState.status === "lost" || gameState.status === "won")}
-    <button
-      class="restartBtn"
-      on:click={() => (gameState = null)}
-      in:fade={{ delay: 400, duration: 1000 }}
-    >
-      Restart?
-    </button>
+    <div class="restartBtns">
+      <button
+        on:click={() =>
+          (gameState = create(
+            lastSettings.width,
+            lastSettings.height,
+            lastSettings.mineCount
+          ))}
+        in:fade={{ delay: 400, duration: 1000 }}
+      >
+        Restart (Same Difficulty)?
+      </button>
+      <button
+        on:click={() => (gameState = null)}
+        in:fade={{ delay: 400, duration: 1000 }}
+      >
+        Restart (New Difficulty)?
+      </button>
+    </div>
   {/if}
 </main>
 
@@ -76,13 +90,17 @@
     justify-content: center;
   }
 
-  .restartBtn {
-    margin-bottom: 0;
-    margin-top: 1rem;
-  }
-
   .winText {
     font-size: 4rem;
     text-align: center;
+  }
+
+  .restartBtns > button {
+    margin: 1rem;
+  }
+
+
+  .restartBtns {
+    display: flex
   }
 </style>
