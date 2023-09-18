@@ -39,6 +39,9 @@
   hgroup {
     margin: 0;
   }
+  h3 {
+    color: white;
+  }
   p {
     margin: 0;
     color: white;
