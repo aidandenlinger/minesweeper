@@ -23,28 +23,22 @@
 >
   {#if cell.status === "open" && cell.adjMines !== 0}
     {cell.adjMines}
-  {:else if cell.status === "hidden"}
-    {#if cell.flagged}
-			<!-- flag, Material Icons by Google, licensed under Apache 2.0 -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        role="img"
-      >
-        <title>Flag</title>
-        <path
-          fill="#000"
-          d="M5 21V4h9l.4 2H20v10h-7l-.4-2H7v7H5Zm7.5-11Zm2.15 4H18V8h-5.25l-.4-2H7v6h7.25l.4 2Z"
-        />
-      </svg>
-    {/if}
+  {:else if cell.status === "hidden" && cell.flagged}
+    <!-- flag, Material Icons by Google, licensed under Apache 2.0 -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+      <title>Flag</title>
+      <path
+        fill="#000"
+        d="M5 21V4h9l.4 2H20v10h-7l-.4-2H7v7H5Zm7.5-11Zm2.15 4H18V8h-5.25l-.4-2H7v6h7.25l.4 2Z"
+      />
+    </svg>
   {:else if cell.status === "mine"}
     <!-- bomb, Material Icons by Google, licensed under Apache 2.0  -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       role="img"
-      id="mine"
+      id="mine-svg"
     >
       <title>Mine!</title>
       <path
@@ -62,7 +56,7 @@
     align-items: center;
   }
 
-  #mine {
+  #mine-svg {
     padding: 0.2rem;
   }
 
