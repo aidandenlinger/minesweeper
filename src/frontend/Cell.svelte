@@ -69,7 +69,7 @@
   .cell {
     aspect-ratio: 1;
     max-width: 2.5rem;
-    border: solid 0.3rem darkgray;
+    border: solid 0.15rem darkgray;
     margin: 0;
     padding: 0;
     border-radius: 0;
