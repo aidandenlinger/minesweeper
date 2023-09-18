@@ -18,16 +18,54 @@
 
 <button
   class="cell {cell.status}"
-  class:flag={cell.status === "hidden" && cell.flagged}
   on:click={handleClick}
   on:contextmenu|preventDefault={handleRightClick}
 >
   {#if cell.status === "open" && cell.adjMines !== 0}
     {cell.adjMines}
+  {:else if cell.status === "hidden"}
+    {#if cell.flagged}
+			<!-- flag, Material Icons by Google, licensed under Apache 2.0 -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        role="img"
+      >
+        <title>Flag</title>
+        <path
+          fill="#000"
+          d="M5 21V4h9l.4 2H20v10h-7l-.4-2H7v7H5Zm7.5-11Zm2.15 4H18V8h-5.25l-.4-2H7v6h7.25l.4 2Z"
+        />
+      </svg>
+    {/if}
+  {:else if cell.status === "mine"}
+    <!-- bomb, Material Icons by Google, licensed under Apache 2.0  -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      role="img"
+      id="mine"
+    >
+      <title>Mine!</title>
+      <path
+        fill="#000"
+        d="M8.65 22.8q-3.125 0-5.313-2.212T1.15 15.25q0-3.125 2.163-5.288T8.6 7.8h.325L9.6 6.625q.3-.55.9-.712t1.15.162l.75.425l.125-.2q.575-1.075 1.8-1.4t2.3.3l.875.5l-1 1.725l-.875-.5q-.35-.2-.763-.088t-.612.463l-.125.2l1 .575q.525.3.688.9t-.138 1.125L15 11.3q.575.9.863 1.913t.287 2.087q0 3.125-2.187 5.313T8.65 22.8ZM20 8.8v-2h3v2h-3Zm-5.5-5.5v-3h2v3h-2Zm4.875 2.025l-1.4-1.4L20.1 1.8l1.4 1.4l-2.125 2.125Z"
+      />
+    </svg>
   {/if}
 </button>
 
 <style>
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #mine {
+    padding: 0.2rem;
+  }
+
   .cell {
     aspect-ratio: 1;
     max-width: 2.5rem;
@@ -47,22 +85,7 @@
   }
 
   .mine {
-    /*
-      Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. 
-    */
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M459.1 52.4L442.6 6.5C440.7 2.6 436.5 0 432.1 0s-8.5 2.6-10.4 6.5L405.2 52.4l-46 16.8c-4.3 1.6-7.3 5.9-7.2 10.4c0 4.5 3 8.7 7.2 10.2l45.7 16.8 16.8 45.8c1.5 4.4 5.8 7.5 10.4 7.5s8.9-3.1 10.4-7.5l16.5-45.8 45.7-16.8c4.2-1.5 7.2-5.7 7.2-10.2c0-4.6-3-8.9-7.2-10.4L459.1 52.4zm-132.4 53c-12.5-12.5-32.8-12.5-45.3 0l-2.9 2.9C256.5 100.3 232.7 96 208 96C93.1 96 0 189.1 0 304S93.1 512 208 512s208-93.1 208-208c0-24.7-4.3-48.5-12.2-70.5l2.9-2.9c12.5-12.5 12.5-32.8 0-45.3l-80-80zM200 192c-57.4 0-104 46.6-104 104v8c0 8.8-7.2 16-16 16s-16-7.2-16-16v-8c0-75.1 60.9-136 136-136h8c8.8 0 16 7.2 16 16s-7.2 16-16 16h-8z"/></svg>');
-    background-position: center;
-    background-size: 1.2em;
     background-color: red;
-  }
-
-  .flag {
-    /*
-      Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. 
-    */
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V388l80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52V24zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8V334.7l-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5v-237z"/></svg>');
-    background-position: center;
-    background-size: 1.2em;
   }
 
   /**
