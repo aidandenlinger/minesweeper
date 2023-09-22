@@ -15,10 +15,9 @@ let flagCount: number
 let startTime: number
 let width: number
 let height: number
-let mineCount: number
 
-export function create(widthP: number, heightP: number, mineCountP: number): GameState {
-  [width, height, mineCount] = [widthP, heightP, mineCountP]
+export function create(widthP: number, heightP: number, mineCount: number): GameState {
+  [width, height] = [widthP, heightP]
   flagCount = 0;
   [gameSolution, mineCoords] = createGrid(width, height, mineCount)
   state = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount } }
@@ -102,7 +101,7 @@ function isWin(): boolean {
   // Is every cell open besides the mines?
   return state.game.flat().reduce((totalOpen, c) =>
     c.status === "open" ? totalOpen + 1 : totalOpen, 0)
-    === width * height - mineCount
+    === width * height - mineCoords.length
 }
 
 /**
@@ -152,6 +151,6 @@ export function flag({ row, column }: Coord): GameState {
     cell.flagged = !cell.flagged
     flagCount += cell.flagged ? 1 : -1
   }
-  state.status =  { state: "playing", minesLeft: mineCount - flagCount }
+  state.status =  { state: "playing", minesLeft: mineCoords.length - flagCount }
   return structuredClone(state)
 }
