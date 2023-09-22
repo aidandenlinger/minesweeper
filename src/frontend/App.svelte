@@ -59,6 +59,9 @@
 
   {#if gameState && gameState.status.state === "won"}
     <p class="winText" in:fade out:fade>Nice Minesweepin', kid.</p>
+    <p class="timeText" in:fade={{ delay: 500 }} out:fade>
+      You sweeped those mines in {gameState.status.time} seconds.
+    </p>
   {/if}
 
   {#if gameState && (gameState.status.state === "lost" || gameState.status.state === "won")}
@@ -70,13 +73,13 @@
             lastSettings.height,
             lastSettings.mineCount
           ))}
-        in:fade={{ delay: 400, duration: 1000 }}
+        in:fade={{ delay: 500, duration: 1000 }}
       >
         Restart (Same Difficulty)
       </button>
       <button
         on:click={() => (gameState = null)}
-        in:fade={{ delay: 400, duration: 1000 }}
+        in:fade={{ delay: 500, duration: 1000 }}
       >
         Restart (New Difficulty)
       </button>
@@ -90,10 +93,17 @@
     justify-content: center;
   }
 
-  .winText {
-    font-size: 4rem;
+  p {
     text-align: center;
     margin: 0;
+  }
+
+  .timeText {
+    font-size: 2rem;
+  }
+
+  .winText {
+    font-size: 4rem;
   }
 
   .restartBtns > button {

@@ -1,7 +1,7 @@
 import { neighbor, type Cell, type Coord } from "./Cell"
 import { createGrid, createHiddenGrid } from "./gridGeneration"
 
-export type Status = { state: "playing" } | { state: "lost" } | { state: "won" }
+export type Status = { state: "playing" } | { state: "lost" } | { state: "won", time: number }
 
 export type GameState = {
   game: Cell[][],
@@ -13,11 +13,14 @@ export type GameState = {
 
 let gameSolution: Cell[][]
 let mineCoords: Coord[]
+let startTime: number
 
 export function create(width: number, height: number, mineCount: number): GameState {
   [gameSolution, mineCoords] = createGrid(width, height, mineCount)
+  let game: GameState = { game: createHiddenGrid(width, height), status: { state: "playing" }, width, height, mineCount }
+  startTime = Date.now()
 
-  return { game: createHiddenGrid(width, height), status: { state: "playing" }, width, height, mineCount }
+  return game
 }
 
 export function click(state: GameState, { row, column }: Coord): GameState {
@@ -55,7 +58,8 @@ export function click(state: GameState, { row, column }: Coord): GameState {
   }
 
   if (isWin(state)) {
-    state.status = { state: "won" }
+    // Convert ms to seconds, round up
+    state.status = { state: "won", time: Math.ceil((Date.now() - startTime) / 1000) }
   }
 
   return state
