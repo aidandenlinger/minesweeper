@@ -11,6 +11,7 @@ export type GameState = {
   mineCount: number
 }
 
+let state: GameState
 let gameSolution: Cell[][]
 let mineCoords: Coord[]
 let flagCount: number
@@ -19,13 +20,13 @@ let startTime: number
 export function create(width: number, height: number, mineCount: number): GameState {
   flagCount = 0;
   [gameSolution, mineCoords] = createGrid(width, height, mineCount)
-  let game: GameState = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount }, width, height, mineCount }
+  state = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount }, width, height, mineCount }
   startTime = Date.now()
 
-  return game
+  return state
 }
 
-export function click(state: GameState, { row, column }: Coord): GameState {
+export function click({ row, column }: Coord): GameState {
   if (row < 0 || row > state.height) {
     throw new Error("X out of bounds")
   }
@@ -41,7 +42,7 @@ export function click(state: GameState, { row, column }: Coord): GameState {
       if (cell.flagged) break; // Don't allow clicking flagged squares
       if (isEmpty({ row, column })) {
         // this is an empty cell, so it's impossible to lose
-        clickEmptyCell(state, { row, column })
+        clickEmptyCell({ row, column })
       } else {
         state.game[row][column] = gameSolution[row][column]
         if (gameSolution[row][column].status === "mine") {
@@ -56,13 +57,13 @@ export function click(state: GameState, { row, column }: Coord): GameState {
     case "open":
       // Chording is only applicable on cells with adjacent flags.
       // We should never calculate it on an empty cell
-      if (cell.adjMines !== 0) chord(state, { row, column })
+      if (cell.adjMines !== 0) chord({ row, column })
       break
     case "mine":
       throw new Error(("Clicked on mine? Game should already be over"))
   }
 
-  if (isWin(state)) {
+  if (isWin()) {
     // Convert ms to seconds, round up
     state.status = { state: "won", time: Math.ceil((Date.now() - startTime) / 1000) }
   }
@@ -70,7 +71,7 @@ export function click(state: GameState, { row, column }: Coord): GameState {
   return state
 }
 
-function chord(state: GameState, coord: Coord): GameState {
+function chord(coord: Coord): GameState {
   let cell = state.game[coord.row][coord.column]
   if (cell.status !== "open") {
     throw new Error("Called chord on a non-open cell!")
@@ -93,14 +94,14 @@ function chord(state: GameState, coord: Coord): GameState {
   for (let n of neighbor(state.width, state.height, coord)) {
     let neighborCell = state.game[n.row][n.column]
     if (state.status.state === "playing" && neighborCell.status === "hidden" && !neighborCell.flagged) {
-      state = click(state, n)
+      state = click(n)
     }
   }
 
   return state
 }
 
-function isWin(state: GameState): boolean {
+function isWin(): boolean {
   // Is every cell open besides the mines?
   return state.game.flat().reduce((totalOpen, c) =>
     c.status === "open" ? totalOpen + 1 : totalOpen, 0)
@@ -111,7 +112,7 @@ function isWin(state: GameState): boolean {
  * Used when a blank cell (0 adjacent mines) is clicked, to clear all
  * adjacent cells. Uses BFS to search and auto-click neighbors.
  */
-function clickEmptyCell(state: GameState, start: Coord): GameState {
+function clickEmptyCell(start: Coord): GameState {
   if (!isEmpty(start)) {
     throw new Error("Calling clickEmpty on a non-empty cell!")
   }
@@ -149,12 +150,13 @@ function isEmpty(coord: Coord): boolean {
   return cell.status === "open" && cell.adjMines === 0
 }
 
-export function flag(state: GameState, { row, column }: Coord): GameState {
+export function flag({ row, column }: Coord): GameState {
   let cell = state.game[row][column]
   if (cell.status == "hidden") {
     // Flip it, so flags can be removed or added
     cell.flagged = !cell.flagged
     flagCount += cell.flagged ? 1 : -1
   }
-  return { ...state, status: { state: "playing", minesLeft: state.mineCount - flagCount } }
+  state.status =  { state: "playing", minesLeft: state.mineCount - flagCount }
+  return state
 }

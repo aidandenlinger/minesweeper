@@ -22,13 +22,13 @@
 
   function clickCell(e: CustomEvent<Coord>) {
     if (gameState && gameState.status.state === "playing") {
-      gameState = click(gameState, e.detail);
+      gameState = click(e.detail);
     }
   }
 
   function rightClickCell(e: CustomEvent<Coord>) {
     if (gameState && gameState.status.state === "playing") {
-      gameState = flag(gameState, e.detail);
+      gameState = flag(e.detail);
     }
   }
 </script>
@@ -99,7 +99,7 @@
   .mineCount {
     padding-top: var(--spacing);
   }
-  
+
   p {
     text-align: center;
     margin: 0;
