@@ -6,9 +6,6 @@ export type Status = { state: "playing", minesLeft: number } | { state: "lost" }
 export type GameState = {
   game: Cell[][],
   status: Status,
-  width: number,
-  height: number,
-  mineCount: number
 }
 
 let state: GameState
@@ -16,22 +13,26 @@ let gameSolution: Cell[][]
 let mineCoords: Coord[]
 let flagCount: number
 let startTime: number
+let width: number
+let height: number
+let mineCount: number
 
-export function create(width: number, height: number, mineCount: number): GameState {
+export function create(widthP: number, heightP: number, mineCountP: number): GameState {
+  [width, height, mineCount] = [widthP, heightP, mineCountP]
   flagCount = 0;
   [gameSolution, mineCoords] = createGrid(width, height, mineCount)
-  state = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount }, width, height, mineCount }
+  state = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount } }
   startTime = Date.now()
 
   return structuredClone(state)
 }
 
 export function click({ row, column }: Coord): GameState {
-  if (row < 0 || row > state.height) {
+  if (row < 0 || row > height) {
     throw new Error("X out of bounds")
   }
 
-  if (column < 0 || column > state.width) {
+  if (column < 0 || column > width) {
     throw new Error("Y out of bounds")
   }
 
@@ -78,7 +79,7 @@ function chord(coord: Coord) {
   }
 
   let adjFlags = 0
-  for (let n of neighbor(state.width, state.height, coord)) {
+  for (let n of neighbor(width, height, coord)) {
     let neighborCell = state.game[n.row][n.column]
     if (neighborCell.status === "hidden" && neighborCell.flagged) {
       adjFlags += 1
@@ -89,7 +90,7 @@ function chord(coord: Coord) {
   if (cell.adjMines !== adjFlags) return
 
   // Click on all non-flagged hidden neighbors, while the game is still playing
-  for (let n of neighbor(state.width, state.height, coord)) {
+  for (let n of neighbor(width, height, coord)) {
     let neighborCell = state.game[n.row][n.column]
     if (state.status.state === "playing" && neighborCell.status === "hidden" && !neighborCell.flagged) {
       click(n)
@@ -101,7 +102,7 @@ function isWin(): boolean {
   // Is every cell open besides the mines?
   return state.game.flat().reduce((totalOpen, c) =>
     c.status === "open" ? totalOpen + 1 : totalOpen, 0)
-    === state.width * state.height - state.mineCount
+    === width * height - mineCount
 }
 
 /**
@@ -129,7 +130,7 @@ function clickEmptyCell(start: Coord) {
       if (!isEmpty({ row, column })) continue;
 
       // Enqueue neighbors if empty
-      for (let n of neighbor(state.width, state.height, { row, column })) {
+      for (let n of neighbor(width, height, { row, column })) {
         if (!visited.has(n)) {
           queue.unshift(n)
           visited.add(n)
@@ -151,6 +152,6 @@ export function flag({ row, column }: Coord): GameState {
     cell.flagged = !cell.flagged
     flagCount += cell.flagged ? 1 : -1
   }
-  state.status =  { state: "playing", minesLeft: state.mineCount - flagCount }
+  state.status =  { state: "playing", minesLeft: mineCount - flagCount }
   return structuredClone(state)
 }
