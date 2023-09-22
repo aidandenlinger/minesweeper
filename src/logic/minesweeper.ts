@@ -54,6 +54,9 @@ export function click(state: GameState, { row, column }: Coord): GameState {
       }
       break
     case "open":
+      // Chording is only applicable on cells with adjacent flags.
+      // We should never calculate it on an empty cell
+      if (cell.adjMines !== 0) chord(state, { row, column })
       break
     case "mine":
       throw new Error(("Clicked on mine? Game should already be over"))
@@ -62,6 +65,36 @@ export function click(state: GameState, { row, column }: Coord): GameState {
   if (isWin(state)) {
     // Convert ms to seconds, round up
     state.status = { state: "won", time: Math.ceil((Date.now() - startTime) / 1000) }
+  }
+
+  return state
+}
+
+function chord(state: GameState, coord: Coord): GameState {
+  let cell = state.game[coord.row][coord.column]
+  if (cell.status !== "open") {
+    throw new Error("Called chord on a non-open cell!")
+  }
+
+  let adjFlags = 0
+  for (let n of neighbor(state.width, state.height, coord)) {
+    let neighborCell = state.game[n.row][n.column]
+    if (neighborCell.status === "hidden" && neighborCell.flagged) {
+      adjFlags += 1
+    }
+  }
+
+  // Number of adjacent mines must be equal to adjacent flagged cells to chord
+  if (cell.adjMines !== adjFlags) {
+    return state;
+  }
+
+  // Click on all non-flagged hidden neighbors, while the game is still playing
+  for (let n of neighbor(state.width, state.height, coord)) {
+    let neighborCell = state.game[n.row][n.column]
+    if (state.status.state === "playing" && neighborCell.status === "hidden" && !neighborCell.flagged) {
+      state = click(state, n)
+    }
   }
 
   return state
@@ -125,5 +158,3 @@ export function flag(state: GameState, { row, column }: Coord): GameState {
   }
   return { ...state, status: { state: "playing", minesLeft: state.mineCount - flagCount } }
 }
-
-export function reveal(state: GameState, { row, column }: Coord) { }
