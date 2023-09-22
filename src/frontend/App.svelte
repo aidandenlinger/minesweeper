@@ -55,6 +55,9 @@
         </div>
       {/each}
     </div>
+    {#if gameState.status.state === "playing"}
+      <p>Mines left: {gameState.status.minesLeft}</p>
+    {/if}
   {/if}
 
   {#if gameState && gameState.status.state === "won"}

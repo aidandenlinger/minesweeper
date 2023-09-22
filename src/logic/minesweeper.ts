@@ -1,7 +1,7 @@
 import { neighbor, type Cell, type Coord } from "./Cell"
 import { createGrid, createHiddenGrid } from "./gridGeneration"
 
-export type Status = { state: "playing" } | { state: "lost" } | { state: "won", time: number }
+export type Status = { state: "playing", minesLeft: number } | { state: "lost" } | { state: "won", time: number }
 
 export type GameState = {
   game: Cell[][],
@@ -13,11 +13,13 @@ export type GameState = {
 
 let gameSolution: Cell[][]
 let mineCoords: Coord[]
+let flagCount: number
 let startTime: number
 
 export function create(width: number, height: number, mineCount: number): GameState {
+  flagCount = 0;
   [gameSolution, mineCoords] = createGrid(width, height, mineCount)
-  let game: GameState = { game: createHiddenGrid(width, height), status: { state: "playing" }, width, height, mineCount }
+  let game: GameState = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount }, width, height, mineCount }
   startTime = Date.now()
 
   return game
@@ -119,8 +121,9 @@ export function flag(state: GameState, { row, column }: Coord): GameState {
   if (cell.status == "hidden") {
     // Flip it, so flags can be removed or added
     cell.flagged = !cell.flagged
+    flagCount += cell.flagged ? 1 : -1
   }
-  return state
+  return { ...state, status: { state: "playing", minesLeft: state.mineCount - flagCount } }
 }
 
 export function reveal(state: GameState, { row, column }: Coord) { }
