@@ -56,7 +56,7 @@
       {/each}
     </div>
     {#if gameState.status.state === "playing"}
-      <p>Mines left: {gameState.status.minesLeft}</p>
+      <p class="mineCount">Mines left: {gameState.status.minesLeft}</p>
     {/if}
   {/if}
 
@@ -96,6 +96,10 @@
     justify-content: center;
   }
 
+  .mineCount {
+    padding-top: var(--spacing);
+  }
+  
   p {
     text-align: center;
     margin: 0;
