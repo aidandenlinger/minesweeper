@@ -23,7 +23,7 @@ export function create(width: number, height: number, mineCount: number): GameSt
   state = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount }, width, height, mineCount }
   startTime = Date.now()
 
-  return state
+  return structuredClone(state)
 }
 
 export function click({ row, column }: Coord): GameState {
@@ -68,10 +68,10 @@ export function click({ row, column }: Coord): GameState {
     state.status = { state: "won", time: Math.ceil((Date.now() - startTime) / 1000) }
   }
 
-  return state
+  return structuredClone(state)
 }
 
-function chord(coord: Coord): GameState {
+function chord(coord: Coord) {
   let cell = state.game[coord.row][coord.column]
   if (cell.status !== "open") {
     throw new Error("Called chord on a non-open cell!")
@@ -86,19 +86,15 @@ function chord(coord: Coord): GameState {
   }
 
   // Number of adjacent mines must be equal to adjacent flagged cells to chord
-  if (cell.adjMines !== adjFlags) {
-    return state;
-  }
+  if (cell.adjMines !== adjFlags) return
 
   // Click on all non-flagged hidden neighbors, while the game is still playing
   for (let n of neighbor(state.width, state.height, coord)) {
     let neighborCell = state.game[n.row][n.column]
     if (state.status.state === "playing" && neighborCell.status === "hidden" && !neighborCell.flagged) {
-      state = click(n)
+      click(n)
     }
   }
-
-  return state
 }
 
 function isWin(): boolean {
@@ -112,7 +108,7 @@ function isWin(): boolean {
  * Used when a blank cell (0 adjacent mines) is clicked, to clear all
  * adjacent cells. Uses BFS to search and auto-click neighbors.
  */
-function clickEmptyCell(start: Coord): GameState {
+function clickEmptyCell(start: Coord) {
   if (!isEmpty(start)) {
     throw new Error("Calling clickEmpty on a non-empty cell!")
   }
@@ -141,8 +137,6 @@ function clickEmptyCell(start: Coord): GameState {
       }
     }
   }
-
-  return state
 }
 
 function isEmpty(coord: Coord): boolean {
@@ -152,11 +146,11 @@ function isEmpty(coord: Coord): boolean {
 
 export function flag({ row, column }: Coord): GameState {
   let cell = state.game[row][column]
-  if (cell.status == "hidden") {
+  if (cell.status === "hidden") {
     // Flip it, so flags can be removed or added
     cell.flagged = !cell.flagged
     flagCount += cell.flagged ? 1 : -1
   }
   state.status =  { state: "playing", minesLeft: state.mineCount - flagCount }
-  return state
+  return structuredClone(state)
 }
