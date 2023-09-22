@@ -21,13 +21,13 @@
   }
 
   function clickCell(e: CustomEvent<Coord>) {
-    if (gameState && gameState.status === "playing") {
+    if (gameState && gameState.status.state === "playing") {
       gameState = click(gameState, e.detail);
     }
   }
 
   function rightClickCell(e: CustomEvent<Coord>) {
-    if (gameState && gameState.status === "playing") {
+    if (gameState && gameState.status.state === "playing") {
       gameState = flag(gameState, e.detail);
     }
   }
@@ -57,11 +57,11 @@
     </div>
   {/if}
 
-  {#if gameState && gameState.status === "won"}
+  {#if gameState && gameState.status.state === "won"}
     <p class="winText" in:fade out:fade>Nice Minesweepin', kid.</p>
   {/if}
 
-  {#if gameState && (gameState.status === "lost" || gameState.status === "won")}
+  {#if gameState && (gameState.status.state === "lost" || gameState.status.state === "won")}
     <div class="restartBtns">
       <button
         on:click={() =>
@@ -100,8 +100,7 @@
     margin: 1rem;
   }
 
-
   .restartBtns {
-    display: flex
+    display: flex;
   }
 </style>

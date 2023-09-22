@@ -1,7 +1,7 @@
 import { neighbor, type Cell, type Coord } from "./Cell"
 import { createGrid, createHiddenGrid } from "./gridGeneration"
 
-export type Status = "playing" | "lost" | "won"
+export type Status = { state: "playing" } | { state: "lost" } | { state: "won" }
 
 export type GameState = {
   game: Cell[][],
@@ -17,7 +17,7 @@ let mineCoords: Coord[]
 export function create(width: number, height: number, mineCount: number): GameState {
   [gameSolution, mineCoords] = createGrid(width, height, mineCount)
 
-  return { game: createHiddenGrid(width, height), status: "playing", width, height, mineCount }
+  return { game: createHiddenGrid(width, height), status: { state: "playing" }, width, height, mineCount }
 }
 
 export function click(state: GameState, { row, column }: Coord): GameState {
@@ -30,7 +30,7 @@ export function click(state: GameState, { row, column }: Coord): GameState {
   }
 
   let cell = state.game[row][column]
-  
+
   switch (cell.status) {
     case "hidden":
       if (cell.flagged) break; // Don't allow clicking flagged squares
@@ -44,7 +44,7 @@ export function click(state: GameState, { row, column }: Coord): GameState {
           for (let { row, column } of mineCoords) {
             state.game[row][column] = gameSolution[row][column]
           }
-          state.status = "lost"
+          state.status = { state: "lost" }
         }
       }
       break
@@ -55,7 +55,7 @@ export function click(state: GameState, { row, column }: Coord): GameState {
   }
 
   if (isWin(state)) {
-    state.status = "won"
+    state.status = { state: "won" }
   }
 
   return state
