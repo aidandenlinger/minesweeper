@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Coord, Cell } from "../logic/Cell";
+  import type { Coord, Cell } from "../../logic/Cell";
   import { createEventDispatcher } from "svelte";
 
   export let cell: Cell;
