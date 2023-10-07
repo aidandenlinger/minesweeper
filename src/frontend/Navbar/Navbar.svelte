@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
+
+	let dispatch = createEventDispatcher();
 
 	onMount(() => {
 		/*!
@@ -121,7 +123,9 @@
 	</ul>
 
 	<ul>
-		<li class="title">Minesweeper</li>
+		<button on:click={() => dispatch("reset")} class="title">
+			Minesweeper
+		</button>
 	</ul>
 
 	<ul>
@@ -144,6 +148,20 @@
 <style>
 	.title {
 		font-weight: bold;
+		/* Remove button CSS */
+		background: none;
+		color: inherit;
+		border: none;
+		margin: 0;
+	}
+
+	/**
+	   * Remove focus styles for non-keyboard focus.
+	   * https://stackoverflow.com/a/60219624
+	   */
+	:focus:not(:focus-visible) {
+		outline: 0;
+		box-shadow: none;
 	}
 
 	ul.theme-list > li {

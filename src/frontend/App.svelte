@@ -18,11 +18,12 @@
   }
 
   function reset() {
+    console.log("resetting")
     gameSettings = null;
   }
 </script>
 
-<Navbar />
+<Navbar on:reset={reset} />
 
 <main>
   {#if !gameSettings}
