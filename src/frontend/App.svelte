@@ -1,6 +1,6 @@
 <script lang="ts">
   import Setup from "./Setup.svelte";
-  import Navbar from "../Navbar/Navbar.svelte";
+  import Navbar from "./Navbar/Navbar.svelte";
   import type { Coord } from "../logic/Cell";
   import { create, click, flag, type GameState } from "../logic/minesweeper";
   import Cell from "./Cell.svelte";
