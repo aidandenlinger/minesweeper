@@ -22,26 +22,15 @@
 </script>
 
 {#each difficulties as { name, conds }}
-  <button
-    on:click={() => sendDifficulty(conds)}
-    in:fade
-  >
-    <hgroup>
-      <h3>{name}</h3>
-      <p>({conds.width}x{conds.height}, {conds.mineCount} mines)</p>
-    </hgroup>
+  <button on:click={() => sendDifficulty(conds)} in:fade>
+    <strong>{name}</strong>
+    ({conds.width}x{conds.height}, {conds.mineCount} mines)
   </button>
 {/each}
 
 <style>
-  hgroup {
-    margin: 0;
-  }
-  h3 {
-    color: white;
-  }
-  p {
-    margin: 0;
+  strong,
+  button {
     color: white;
   }
 </style>
