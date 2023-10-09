@@ -123,9 +123,11 @@
 	</ul>
 
 	<ul>
-		<button on:click={() => dispatch("reset")} class="title">
-			Minesweeper
-		</button>
+		<li>
+			<button on:click={() => dispatch("reset")} class="title">
+				Minesweeper
+			</button>
+		</li>
 	</ul>
 
 	<ul>
