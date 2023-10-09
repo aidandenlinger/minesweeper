@@ -1,39 +1,37 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
+  import type { GameConditions } from "../App.svelte";
 
   const dispatch = createEventDispatcher();
+
+  type Difficulty = {
+    name: string;
+    conds: GameConditions;
+  };
+
+  let difficulties: Difficulty[] = [
+    { name: "Beginner", conds: { width: 9, height: 9, mineCount: 10 } },
+    { name: "Intermediate", conds: { width: 16, height: 16, mineCount: 40 } },
+    { name: "Advanced", conds: { width: 30, height: 16, mineCount: 99 } },
+  ];
+
+  function sendDifficulty(diff: GameConditions) {
+    dispatch("setup", diff);
+  }
 </script>
 
-<button
-  on:click={() => dispatch("setup", { width: 9, height: 9, mineCount: 10 })}
-  in:fade
->
-  <hgroup>
-    <h3>Beginner</h3>
-    <p>(9x9, 10 mines)</p>
-  </hgroup>
-</button>
-
-<button
-  on:click={() => dispatch("setup", { width: 16, height: 16, mineCount: 40 })}
-  in:fade
->
-  <hgroup>
-    <h3>Intermediate</h3>
-    <p>(16x16, 40 mines)</p>
-  </hgroup>
-</button>
-
-<button
-  on:click={() => dispatch("setup", { width: 30, height: 16, mineCount: 99 })}
-  in:fade
->
-  <hgroup>
-    <h3>Advanced</h3>
-    <p>(30x16, 99 mines)</p>
-  </hgroup>
-</button>
+{#each difficulties as { name, conds }}
+  <button
+    on:click={() => sendDifficulty(conds)}
+    in:fade
+  >
+    <hgroup>
+      <h3>{name}</h3>
+      <p>({conds.width}x{conds.height}, {conds.mineCount} mines)</p>
+    </hgroup>
+  </button>
+{/each}
 
 <style>
   hgroup {
