@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
   import type { GameConditions } from "../App.svelte";
+  import CustomSetup from "./CustomSetup.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -27,6 +28,8 @@
     ({conds.width}x{conds.height}, {conds.mineCount} mines)
   </button>
 {/each}
+
+<CustomSetup on:custom={(e) => sendDifficulty(e.detail)}/>
 
 <style>
   strong,
