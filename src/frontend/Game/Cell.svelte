@@ -5,7 +5,10 @@
   export let cell: Cell;
   export let coord: Coord;
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{
+    clicked: Coord;
+    rightclicked: Coord;
+  }>();
 
   function handleClick() {
     dispatch("clicked", coord);

@@ -4,7 +4,7 @@
   import type { GameConditions } from "../App.svelte";
   import CustomSetup from "./CustomSetup.svelte";
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ setup: GameConditions }>();
 
   type Difficulty = {
     name: string;
@@ -29,7 +29,7 @@
   </button>
 {/each}
 
-<CustomSetup on:custom={(e) => sendDifficulty(e.detail)}/>
+<CustomSetup on:custom={(e) => sendDifficulty(e.detail)} />
 
 <style>
   strong,

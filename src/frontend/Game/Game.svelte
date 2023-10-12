@@ -13,7 +13,7 @@
     gameSettings.mineCount
   );
 
-  let dispatch = createEventDispatcher();
+  let dispatch = createEventDispatcher<{ reset: null }>();
 
   function clickCell(e: CustomEvent<Coord>) {
     if (gameState.status.state === "playing") {

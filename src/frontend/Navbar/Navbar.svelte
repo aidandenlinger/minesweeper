@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from "svelte";
 
-	let dispatch = createEventDispatcher();
+	let dispatch = createEventDispatcher<{ reset: null }>();
 
 	onMount(() => {
 		/*!

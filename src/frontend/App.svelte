@@ -18,7 +18,6 @@
   }
 
   function reset() {
-    console.log("resetting")
     gameSettings = null;
   }
 </script>
