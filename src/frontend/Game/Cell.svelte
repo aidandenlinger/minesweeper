@@ -6,23 +6,15 @@
   export let coord: Coord;
 
   const dispatch = createEventDispatcher<{
-    clicked: Coord;
-    rightclicked: Coord;
+    select: Coord;
+    flag: Coord;
   }>();
-
-  function handleClick() {
-    dispatch("clicked", coord);
-  }
-
-  function handleRightClick() {
-    dispatch("rightclicked", coord);
-  }
 </script>
 
 <button
   class="cell {cell.status}"
-  on:click={handleClick}
-  on:contextmenu|preventDefault={handleRightClick}
+  on:click={() => dispatch("select", coord)}
+  on:contextmenu|preventDefault={() => dispatch("flag", coord)}
 >
   {#if cell.status === "open" && cell.adjMines !== 0}
     {cell.adjMines}

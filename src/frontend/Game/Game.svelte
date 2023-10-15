@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { GameConditions } from "../App.svelte";
   import type { Coord } from "../../logic/Cell";
-  import { create, click, flag, type GameState } from "../../logic/minesweeper";
+  import { create, select, flag, type GameState } from "../../logic/minesweeper";
   import Cell from "./Cell.svelte";
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
@@ -15,13 +15,13 @@
 
   let dispatch = createEventDispatcher<{ reset: null }>();
 
-  function clickCell(e: CustomEvent<Coord>) {
+  function selectCell(e: CustomEvent<Coord>) {
     if (gameState.status.state === "playing") {
-      gameState = click(e.detail);
+      gameState = select(e.detail);
     }
   }
 
-  function rightClickCell(e: CustomEvent<Coord>) {
+  function flagCell(e: CustomEvent<Coord>) {
     if (gameState.status.state === "playing") {
       gameState = flag(e.detail);
     }
@@ -35,8 +35,8 @@
         <Cell
           {cell}
           coord={{ row, column }}
-          on:clicked={clickCell}
-          on:rightclicked={rightClickCell}
+          on:select={selectCell}
+          on:flag={flagCell}
         />
       {/each}
     </div>

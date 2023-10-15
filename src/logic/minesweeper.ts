@@ -33,7 +33,7 @@ export function create(widthP: number, heightP: number, mineCount: number): Game
   return structuredClone(state)
 }
 
-export function click({ row, column }: Coord): GameState {
+export function select({ row, column }: Coord): GameState {
   if (row < 0 || row > height) {
     throw new Error("X out of bounds")
   }
@@ -99,7 +99,7 @@ function chord(coord: Coord) {
   for (let n of neighbor(width, height, coord)) {
     let neighborCell = state.game[n.row][n.column]
     if (state.status.state === "playing" && neighborCell.status === "hidden" && !neighborCell.flagged) {
-      click(n)
+      select(n)
     }
   }
 }
