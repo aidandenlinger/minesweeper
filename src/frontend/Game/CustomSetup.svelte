@@ -9,6 +9,8 @@
   let mineCount: number | undefined;
   let mineCountInput: HTMLInputElement;
 
+  const maxSize = 50;
+
   let dispatch = createEventDispatcher<{ custom: GameConditions }>();
 
   let customDifficulty: EventHandler<SubmitEvent, HTMLFormElement> = ({
@@ -62,7 +64,7 @@
           on:change={() => mineCountInRange()}
           type="number"
           min="1"
-          max="100"
+          max={maxSize}
         />
       </label>
       <label>
@@ -73,7 +75,7 @@
           on:change={() => mineCountInRange()}
           type="number"
           min="1"
-          max="100"
+          max={maxSize}
         />
       </label>
       <label>
@@ -84,7 +86,7 @@
           on:change={() => mineCountInRange()}
           type="number"
           min="1"
-          max="100"
+          max={maxSize}
           bind:this={mineCountInput}
         />
       </label>
