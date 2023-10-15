@@ -47,7 +47,7 @@
     } else {
       mineCountInput.setCustomValidity("");
     }
-  };
+  }
 </script>
 
 <details>
@@ -62,6 +62,7 @@
           on:change={() => mineCountInRange()}
           type="number"
           min="1"
+          max="100"
         />
       </label>
       <label>
@@ -72,6 +73,7 @@
           on:change={() => mineCountInRange()}
           type="number"
           min="1"
+          max="100"
         />
       </label>
       <label>
@@ -82,6 +84,7 @@
           on:change={() => mineCountInRange()}
           type="number"
           min="1"
+          max="100"
           bind:this={mineCountInput}
         />
       </label>

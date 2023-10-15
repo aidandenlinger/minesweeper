@@ -17,6 +17,13 @@ let width: number
 let height: number
 
 export function create(widthP: number, heightP: number, mineCount: number): GameState {
+  if (widthP <= 0 || widthP > 100) {
+    throw new Error(`width is not within range: 0 < ${widthP} <= 100 is not true`)
+  }
+  if (heightP <= 0 || heightP > 100) {
+    throw new Error(`height is not within range: 0 < ${heightP} <= 100 is not true`)
+  }
+
   [width, height] = [widthP, heightP]
   flagCount = 0;
   [gameSolution, mineCoords] = createGrid(width, height, mineCount)
@@ -151,6 +158,6 @@ export function flag({ row, column }: Coord): GameState {
     cell.flagged = !cell.flagged
     flagCount += cell.flagged ? 1 : -1
   }
-  state.status =  { state: "playing", minesLeft: mineCoords.length - flagCount }
+  state.status = { state: "playing", minesLeft: mineCoords.length - flagCount }
   return structuredClone(state)
 }
