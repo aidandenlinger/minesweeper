@@ -55,7 +55,7 @@
 {/if}
 
 {#if gameState.status.state === "lost" || gameState.status.state === "won"}
-  <div class="restartBtns">
+  <div class="restartBtns" in:fade={{ delay: 500, duration: 1000 }}>
     <button
       on:click={() =>
         (gameState = create(
@@ -63,13 +63,11 @@
           gameSettings.height,
           gameSettings.mineCount
         ))}
-      in:fade={{ delay: 500, duration: 1000 }}
     >
       Restart (Same Difficulty)
     </button>
     <button
       on:click={() => dispatch("reset")}
-      in:fade={{ delay: 500, duration: 1000 }}
     >
       Restart (New Difficulty)
     </button>
