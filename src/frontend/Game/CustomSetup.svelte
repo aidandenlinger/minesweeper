@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import { fade } from "svelte/transition";
   import type { GameConditions } from "../App.svelte";
   import type { EventHandler } from "svelte/elements";
   let width: number | undefined;
@@ -50,7 +51,7 @@
   }
 </script>
 
-<details>
+<details in:fade>
   <summary>Custom Setup</summary>
   <form on:submit|preventDefault={customDifficulty}>
     <fieldset>

@@ -23,7 +23,7 @@
 </script>
 
 {#each difficulties as { name, conds }}
-  <button on:click={() => sendDifficulty(conds)} in:fade>
+  <button on:click={() => sendDifficulty(conds)} in:fade|global>
     <strong>{name}</strong>
     ({conds.width}x{conds.height}, {conds.mineCount} mines)
   </button>
