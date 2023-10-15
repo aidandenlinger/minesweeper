@@ -3,6 +3,7 @@
   import { fade } from "svelte/transition";
   import type { GameConditions } from "../App.svelte";
   import type { EventHandler } from "svelte/elements";
+
   let width: number | undefined;
   let height: number | undefined;
   let mineCount: number | undefined;
@@ -13,19 +14,17 @@
   let customDifficulty: EventHandler<SubmitEvent, HTMLFormElement> = ({
     currentTarget,
   }) => {
-    // Check inputs!
+    // Check "required", "min", "max" html tags are true
     if (!currentTarget.checkValidity()) return;
 
-    // This should be true after checking validity, but Typescript doesn't
-    // know that
+    // This should be true after checking validity since all are required, but
+    // Typescript doesn't know that
     if (
       width !== undefined &&
       height !== undefined &&
       mineCount !== undefined
     ) {
-      let conds: GameConditions = { width, height, mineCount };
-
-      dispatch("custom", conds);
+      dispatch("custom", { width, height, mineCount });
     }
   };
 
