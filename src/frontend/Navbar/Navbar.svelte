@@ -124,7 +124,7 @@
 
 	<ul>
 		<li>
-			<button on:click={() => dispatch("reset")} class="title">
+			<button on:click={() => dispatch("reset")} id="title">
 				Minesweeper
 			</button>
 		</li>
@@ -148,7 +148,7 @@
 </nav>
 
 <style>
-	.title {
+	#title {
 		font-weight: bold;
 		/* Remove button CSS */
 		background: none;

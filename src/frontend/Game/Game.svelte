@@ -44,18 +44,18 @@
 </div>
 
 {#if gameState.status.state === "playing"}
-  <p class="mineCount">Mines left: {gameState.status.minesLeft}</p>
+  <p id="mineCount">Mines left: {gameState.status.minesLeft}</p>
 {/if}
 
 {#if gameState.status.state === "won"}
-  <p class="winText" in:fade out:fade>Nice Minesweepin', kid.</p>
-  <p class="timeText" in:fade={{ delay: 500 }} out:fade>
+  <p id="winText" in:fade out:fade>Nice Minesweepin', kid.</p>
+  <p id="timeText" in:fade={{ delay: 500 }} out:fade>
     You sweeped those mines in {gameState.status.time} seconds.
   </p>
 {/if}
 
 {#if gameState.status.state === "lost" || gameState.status.state === "won"}
-  <div class="restartBtns" in:fade={{ delay: 500, duration: 1000 }}>
+  <div id="restartBtns" in:fade={{ delay: 500, duration: 1000 }}>
     <button
       on:click={() =>
         (gameState = create(
@@ -80,7 +80,7 @@
     justify-content: center;
   }
 
-  .mineCount {
+  #mineCount {
     padding-top: var(--spacing);
   }
 
@@ -89,19 +89,19 @@
     margin: 0;
   }
 
-  .timeText {
+  #timeText {
     font-size: 2rem;
   }
 
-  .winText {
+  #winText {
     font-size: 4rem;
   }
 
-  .restartBtns > button {
+  #restartBtns > button {
     margin: 1rem;
   }
 
-  .restartBtns {
+  #restartBtns {
     display: flex;
   }
 </style>
