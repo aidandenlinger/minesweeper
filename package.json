@@ -13,11 +13,11 @@
     "@picocss/pico": "^1.5.10",
     "@sveltejs/vite-plugin-svelte": "^2.4.6",
     "@tsconfig/svelte": "^5.0.2",
-    "svelte": "^4.2.1",
+    "svelte": "^4.2.2",
     "svelte-check": "^3.5.2",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "typescript-svelte-plugin": "^0.3.34",
-    "vite": "^4.4.11"
+    "vite": "^4.5.0"
   }
 }
