@@ -70,6 +70,8 @@ export function select({ row, column }: Coord): GameState {
             state.game[row][column] = gameSolution[row][column]
           }
           state.status = { state: "lost" }
+          // return immediately on loss, don't check win condition
+          return structuredClone(state)
         }
       }
       break
