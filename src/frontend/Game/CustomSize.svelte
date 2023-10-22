@@ -53,7 +53,7 @@
 </script>
 
 <details in:fade>
-  <summary>Custom Setup</summary>
+  <summary>Custom Size</summary>
   <form on:submit|preventDefault={customDifficulty}>
     <fieldset>
       <label>
@@ -92,7 +92,7 @@
       </label>
     </fieldset>
 
-    <button>Submit</button>
+    <button>Play!</button>
   </form>
 </details>
 

@@ -8,6 +8,8 @@ export type GameState = {
   status: Status,
 }
 
+export type FirstClickBehavior = "open cell" | "not mine" | "can be mine"
+
 let state: GameState
 let gameSolution: Cell[][]
 let mineCoords: Coord[]
@@ -15,8 +17,11 @@ let flagCount: number
 let startTime: number
 let width: number
 let height: number
+let mineCount: number
+let firstClickBehavior: FirstClickBehavior
+let firstClickOccurred: boolean
 
-export function create(widthP: number, heightP: number, mineCount: number): GameState {
+export function create(widthP: number, heightP: number, mineCountP: number, firstClickP: FirstClickBehavior): GameState {
   if (widthP <= 0 || widthP > 100) {
     throw new Error(`width is not within range: 0 < ${widthP} <= 100 is not true`)
   }
@@ -24,9 +29,10 @@ export function create(widthP: number, heightP: number, mineCount: number): Game
     throw new Error(`height is not within range: 0 < ${heightP} <= 100 is not true`)
   }
 
-  [width, height] = [widthP, heightP]
+  [width, height, mineCount] = [widthP, heightP, mineCountP]
+  firstClickBehavior = firstClickP
   flagCount = 0;
-  [gameSolution, mineCoords] = createGrid(width, height, mineCount)
+  firstClickOccurred = false
   state = { game: createHiddenGrid(width, height), status: { state: "playing", minesLeft: mineCount } }
   startTime = Date.now()
 
@@ -40,6 +46,12 @@ export function select({ row, column }: Coord): GameState {
 
   if (column < 0 || column > width) {
     throw new Error("Y out of bounds")
+  }
+
+  if (!firstClickOccurred) {
+    // This is the first click, now that we know where the first click is generate a board
+    [gameSolution, mineCoords] = createGrid(width, height, mineCount, { row, column }, firstClickBehavior)
+    firstClickOccurred = true
   }
 
   let cell = state.game[row][column]

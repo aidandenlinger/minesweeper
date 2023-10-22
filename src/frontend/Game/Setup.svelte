@@ -2,7 +2,8 @@
   import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
   import type { GameConditions } from "../App.svelte";
-  import CustomSetup from "./CustomSetup.svelte";
+  import CustomSize from "./CustomSize.svelte";
+  import Options from "./Options.svelte";
 
   const dispatch = createEventDispatcher<{ setup: GameConditions }>();
 
@@ -29,7 +30,9 @@
   </button>
 {/each}
 
-<CustomSetup on:custom={(e) => sendDifficulty(e.detail)} />
+<CustomSize on:custom={(e) => sendDifficulty(e.detail)} />
+
+<Options />
 
 <style>
   strong,

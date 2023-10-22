@@ -1,16 +1,24 @@
 <script lang="ts">
   import type { GameConditions } from "../App.svelte";
   import type { Coord } from "../../logic/Cell";
-  import { create, select, flag, type GameState } from "../../logic/minesweeper";
+  import {
+    create,
+    select,
+    flag,
+    type GameState,
+    type FirstClickBehavior,
+  } from "../../logic/minesweeper";
   import Cell from "./Cell.svelte";
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
 
   export let gameSettings: GameConditions;
+  export let firstClickBehavior: FirstClickBehavior;
   let gameState: GameState = create(
     gameSettings.width,
     gameSettings.height,
-    gameSettings.mineCount
+    gameSettings.mineCount,
+    firstClickBehavior
   );
 
   let dispatch = createEventDispatcher<{ reset: null }>();
@@ -61,14 +69,13 @@
         (gameState = create(
           gameSettings.width,
           gameSettings.height,
-          gameSettings.mineCount
+          gameSettings.mineCount,
+          firstClickBehavior
         ))}
     >
       Restart (Same Difficulty)
     </button>
-    <button
-      on:click={() => dispatch("reset")}
-    >
+    <button on:click={() => dispatch("reset")}>
       Restart (New Difficulty)
     </button>
   </div>
