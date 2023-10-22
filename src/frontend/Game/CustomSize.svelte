@@ -86,7 +86,6 @@
           on:change={() => mineCountInRange()}
           type="number"
           min="1"
-          max={maxSize}
           bind:this={mineCountInput}
         />
       </label>
