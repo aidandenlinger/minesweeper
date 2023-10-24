@@ -61,7 +61,7 @@ export function select({ row, column }: Coord): GameState {
       if (cell.flagged) break; // Don't allow clicking flagged squares
       if (isEmpty({ row, column })) {
         // this is an empty cell, so it's impossible to lose
-        clickEmptyCell({ row, column })
+        selectEmptyCell({ row, column })
       } else {
         state.game[row][column] = gameSolution[row][column]
         if (gameSolution[row][column].status === "mine") {
@@ -129,7 +129,7 @@ function isWin(): boolean {
  * Used when a blank cell (0 adjacent mines) is clicked, to clear all
  * adjacent cells. Uses BFS to search and auto-click neighbors.
  */
-function clickEmptyCell(start: Coord) {
+function selectEmptyCell(start: Coord) {
   if (!isEmpty(start)) {
     throw new Error("Calling clickEmpty on a non-empty cell!")
   }
