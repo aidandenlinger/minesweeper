@@ -1,11 +1,6 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import type { FirstClickBehavior } from "../../logic/minesweeper";
   import { firstClickBehavior } from "./stores";
-
-  let firstClickValue: FirstClickBehavior;
-
-  firstClickBehavior.subscribe((v) => (firstClickValue = v));
 </script>
 
 <details in:fade>
@@ -18,24 +13,24 @@
         <input
           type="radio"
           name="firstClick"
-          on:click={() => firstClickBehavior.set("open cell")}
-          checked={firstClickValue === "open cell"}
+          on:click={() => ($firstClickBehavior = "open cell")}
+          checked={$firstClickBehavior === "open cell"}
         />will be an open cell (if possible)
       </label>
       <label>
         <input
           type="radio"
           name="firstClick"
-          on:click={() => firstClickBehavior.set("not mine")}
-          checked={firstClickValue === "not mine"}
+          on:click={() => ($firstClickBehavior = "not mine")}
+          checked={$firstClickBehavior === "not mine"}
         />will not be a mine
       </label>
       <label>
         <input
           type="radio"
           name="firstClick"
-          on:click={() => firstClickBehavior.set("can be mine")}
-          checked={firstClickValue === "can be mine"}
+          on:click={() => ($firstClickBehavior = "can be mine")}
+          checked={$firstClickBehavior === "can be mine"}
         />can be a mine
       </label>
     </fieldset>

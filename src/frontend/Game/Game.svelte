@@ -6,19 +6,18 @@
     select,
     flag,
     type GameState,
-    type FirstClickBehavior,
   } from "../../logic/minesweeper";
   import Cell from "./Cell.svelte";
   import { fade } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
+  import { firstClickBehavior } from "./stores";
 
   export let gameSettings: GameConditions;
-  export let firstClickBehavior: FirstClickBehavior;
   let gameState: GameState = create(
     gameSettings.width,
     gameSettings.height,
     gameSettings.mineCount,
-    firstClickBehavior
+    $firstClickBehavior
   );
 
   let dispatch = createEventDispatcher<{ reset: null }>();
@@ -70,7 +69,7 @@
           gameSettings.width,
           gameSettings.height,
           gameSettings.mineCount,
-          firstClickBehavior
+          $firstClickBehavior
         ))}
     >
       Restart (Same Difficulty)
