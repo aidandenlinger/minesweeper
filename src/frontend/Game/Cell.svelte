@@ -33,7 +33,7 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       role="img"
-      id="mine-svg"
+      class="mine-svg"
     >
       <title>Mine!</title>
       <path
@@ -51,7 +51,7 @@
     align-items: center;
   }
 
-  #mine-svg {
+  .mine-svg {
     padding: 0.2rem;
   }
 
