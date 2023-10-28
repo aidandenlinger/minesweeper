@@ -48,6 +48,7 @@
 		color: inherit;
 		border: none;
 		margin: 0;
+		padding: 0;
 	}
 
 	/**
@@ -57,5 +58,9 @@
 	:focus:not(:focus-visible) {
 		outline: 0;
 		box-shadow: none;
+	}
+
+	nav {
+		margin: var(--spacing) 0
 	}
 </style>
