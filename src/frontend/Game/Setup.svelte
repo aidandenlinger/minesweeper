@@ -33,10 +33,3 @@
 <CustomSize on:custom={(e) => sendDifficulty(e.detail)} />
 
 <Options />
-
-<style>
-  strong,
-  button {
-    color: white;
-  }
-</style>
