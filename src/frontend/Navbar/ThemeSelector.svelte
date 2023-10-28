@@ -1,119 +1,33 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { currentTheme, type Theme } from "../Game/stores";
 
-  onMount(() => {
-    /*!
-     * Minimal theme switcher
-     *
-     * Pico.css - https://picocss.com
-     * Copyright 2019-2023 - Licensed under MIT
-     */
+  let themes: Theme[] = ["auto", "light", "dark"];
 
-    const themeSwitcher = {
-      // Config
-      _scheme: "auto",
-      menuTarget: "details[role='list']",
-      buttonsTarget: "li[data-theme-switcher]",
-      buttonAttribute: "data-theme-switcher",
-      rootAttribute: "data-theme",
-      localStorageKey: "picoPreferredColorScheme",
-
-      // Init
-      init() {
-        this.scheme = this.schemeFromLocalStorage;
-        this.initSwitchers();
-      },
-
-      // Get color scheme from local storage
-      get schemeFromLocalStorage(): string {
-        if (typeof window.localStorage !== "undefined") {
-          if (window.localStorage.getItem(this.localStorageKey) !== null) {
-            return (
-              window.localStorage.getItem(this.localStorageKey) ?? this._scheme
-            );
-          }
-        }
-        return this._scheme;
-      },
-
-      // Preferred color scheme
-      get preferredColorScheme(): "dark" | "light" {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
+  // currentTheme is now tied to the "data-theme" attribute on the html tag
+  currentTheme.subscribe((theme) => {
+    switch (theme) {
+      case "auto":
+        const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
+          .matches
           ? "dark"
           : "light";
-      },
-
-      // Init switchers
-      initSwitchers() {
-        const buttons = document.querySelectorAll(this.buttonsTarget);
-        buttons.forEach((button) => {
-          button.addEventListener(
-            "click",
-            (event) => {
-              event.preventDefault();
-              // Set scheme
-              this.scheme =
-                button.getAttribute(this.buttonAttribute) ?? this._scheme;
-              // Close dropdown
-              document.querySelector(this.menuTarget)?.removeAttribute("open");
-            },
-            false
-          );
-        });
-      },
-
-      // Set scheme
-      set scheme(scheme) {
-        if (scheme == "auto") {
-          this.preferredColorScheme == "dark"
-            ? (this._scheme = "dark")
-            : (this._scheme = "light");
-        } else if (scheme == "dark" || scheme == "light") {
-          this._scheme = scheme;
-        }
-        this.applyScheme();
-        this.schemeToLocalStorage();
-      },
-
-      // Get scheme
-      get scheme() {
-        return this._scheme;
-      },
-
-      // Apply scheme
-      applyScheme() {
         document
-          .querySelector("html")
-          ?.setAttribute(this.rootAttribute, this.scheme);
-      },
+          .querySelector("html")!
+          .setAttribute("data-theme", preferredTheme);
+        break;
 
-      // Store scheme to local storage
-      schemeToLocalStorage() {
-        if (typeof window.localStorage !== "undefined") {
-          window.localStorage.setItem(this.localStorageKey, this.scheme);
-        }
-      },
-    };
-
-    // Init
-    themeSwitcher.init();
+      default:
+        document.querySelector("html")!.setAttribute("data-theme", theme);
+        break;
+    }
   });
+
+  function cycle() {
+    let index = themes.findIndex((val) => val === $currentTheme)!;
+    $currentTheme = themes[(index + 1) % themes.length];
+  }
 </script>
 
-<details role="list" dir="rtl">
-  <summary aria-haspopup="listbox" role="link" class="secondary">
-    Theme
-  </summary>
-
-  <ul class="theme-list" role="listbox">
-    <li data-theme-switcher="auto">Auto</li>
-    <li data-theme-switcher="light">Light</li>
-    <li data-theme-switcher="dark">Dark</li>
-  </ul>
-</details>
-
-<style>
-  ul.theme-list > li {
-    cursor: pointer;
-  }
-</style>
+<button on:click={cycle}>
+  {$currentTheme}
+</button>
