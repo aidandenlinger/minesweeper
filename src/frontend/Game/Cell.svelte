@@ -19,7 +19,7 @@
   {#if cell.status === "open" && cell.adjMines !== 0}
     {cell.adjMines}
   {:else if cell.status === "hidden" && cell.flagged}
-    <!-- flag, Material Icons by Google, licensed under Apache 2.0 -->
+    <!-- flag, Material Symbols by Google, licensed under Apache 2.0 -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
       <title>Flag</title>
       <path
@@ -28,7 +28,7 @@
       />
     </svg>
   {:else if cell.status === "mine"}
-    <!-- bomb, Material Icons by Google, licensed under Apache 2.0  -->
+    <!-- bomb, Material Symbols by Google, licensed under Apache 2.0  -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"

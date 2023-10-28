@@ -8,7 +8,7 @@
 <nav>
 	<ul>
 		<li>
-			<!-- videogame-asset Material Icons by Google, licensed under Apache 2.0 -->
+			<!-- videogame-asset Material Symbols by Google, licensed under Apache 2.0 -->
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
