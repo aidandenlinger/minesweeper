@@ -9,7 +9,7 @@
   );
 
   function cycle() {
-    let index = themes.findIndex((val) => val === $currentTheme)!;
+    let index = themes.indexOf($currentTheme);
     $currentTheme = themes[(index + 1) % themes.length];
   }
 </script>
