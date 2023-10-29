@@ -1,5 +1,8 @@
 module.exports = {
   root: true,
+  env: {
+    browser: true
+  },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/strict', 'plugin:@typescript-eslint/stylistic', 'plugin:svelte/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
