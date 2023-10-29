@@ -140,6 +140,7 @@ function selectEmptyCell(start: Coord) {
 
   while (queue.length !== 0) {
     // Will not be undefined, as we just checked length
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const { row, column } = queue.pop()!
     const cell = state.game[row][column]
 

@@ -5,6 +5,8 @@
 
   // currentTheme is now tied to the "data-theme" attribute on the html tag
   currentTheme.subscribe((theme) => {
+    // It is impossible for there to not be an html tag
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     document.querySelector("html")!.setAttribute("data-theme", theme);
   });
 
