@@ -52,15 +52,15 @@
 	}
 
 	/**
-	   * Remove focus styles for non-keyboard focus.
-	   * https://stackoverflow.com/a/60219624
-	   */
+   * Remove focus styles for non-keyboard focus.
+   * https://stackoverflow.com/a/60219624
+   */
 	:focus:not(:focus-visible) {
 		outline: 0;
 		box-shadow: none;
 	}
 
 	nav {
-		margin: var(--spacing) 0
+		margin: var(--spacing) 0;
 	}
 </style>

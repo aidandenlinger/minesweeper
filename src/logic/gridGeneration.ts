@@ -6,10 +6,10 @@ import type { FirstClickBehavior } from './minesweeper'
  * frontend.
  */
 export function createHiddenGrid(width: number, height: number): Cell[][] {
-  const hiddenGrid: Cell[][] = new Array(height)
+  const hiddenGrid = new Array<Cell[]>(height)
 
   for (let row = 0; row < height; ++row) {
-    hiddenGrid[row] = new Array(width)
+    hiddenGrid[row] = new Array<Cell>(width)
     for (let col = 0; col < width; ++col) {
       hiddenGrid[row][col] = { "status": "hidden", flagged: false }
     }
@@ -24,10 +24,10 @@ export function createGrid(width: number, height: number, mineCount: number, fir
   }
 
   // Fill grid with all open cells
-  const grid: Cell[][] = new Array(height)
+  const grid = new Array<Cell[]>(height)
 
   for (let row = 0; row < height; ++row) {
-    grid[row] = new Array(width)
+    grid[row] = new Array<Cell>(width)
     for (let column = 0; column < width; ++column) {
       // Initial value of open cell with 0 adjacent mines
       grid[row][column] = { "status": "open", adjMines: 0 }
@@ -61,7 +61,7 @@ function getMineCoordinates(width: number, height: number, mineCount: number, fi
 
   if (mineCount < width * height) {
     switch (firstClickBehavior) {
-      case "open cell":
+      case "open cell": {
         bannedCells.add(firstClick)
 
         // The number of cells left that aren't mines
@@ -75,6 +75,7 @@ function getMineCoordinates(width: number, height: number, mineCount: number, fi
         }
 
         break
+      }
       case "not mine":
         bannedCells.add(firstClick)
         break
