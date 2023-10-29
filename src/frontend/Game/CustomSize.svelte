@@ -61,7 +61,7 @@
         <input
           required
           bind:value={width}
-          on:change={() => mineCountInRange()}
+          on:change={mineCountInRange}
           type="number"
           min="1"
           max={maxSize}
@@ -72,7 +72,7 @@
         <input
           required
           bind:value={height}
-          on:change={() => mineCountInRange()}
+          on:change={mineCountInRange}
           type="number"
           min="1"
           max={maxSize}
@@ -83,7 +83,7 @@
         <input
           required
           bind:value={mineCount}
-          on:change={() => mineCountInRange()}
+          on:change={mineCountInRange}
           type="number"
           min="1"
           bind:this={mineCountInput}

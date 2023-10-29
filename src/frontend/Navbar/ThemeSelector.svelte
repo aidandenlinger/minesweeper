@@ -4,9 +4,9 @@
   let themes: Theme[] = ["light", "dark"];
 
   // currentTheme is now tied to the "data-theme" attribute on the html tag
-  currentTheme.subscribe((theme) =>
-    document.querySelector("html")!.setAttribute("data-theme", theme)
-  );
+  currentTheme.subscribe((theme) => {
+    document.querySelector("html")!.setAttribute("data-theme", theme);
+  });
 
   function cycle() {
     let index = themes.indexOf($currentTheme);

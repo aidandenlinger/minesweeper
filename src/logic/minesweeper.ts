@@ -3,7 +3,7 @@ import { createGrid, createHiddenGrid } from "./gridGeneration"
 
 export type Status = { state: "playing", minesLeft: number } | { state: "lost" } | { state: "won", time: number }
 
-export type GameState = {
+export interface GameState {
   game: Cell[][],
   status: Status,
 }
@@ -54,7 +54,7 @@ export function select({ row, column }: Coord): GameState {
     firstClickOccurred = true
   }
 
-  let cell = state.game[row][column]
+  const cell = state.game[row][column]
 
   switch (cell.status) {
     case "hidden":
@@ -66,7 +66,7 @@ export function select({ row, column }: Coord): GameState {
         state.game[row][column] = gameSolution[row][column]
         if (gameSolution[row][column].status === "mine") {
           // reveal all mines
-          for (let { row, column } of mineCoords) {
+          for (const { row, column } of mineCoords) {
             state.game[row][column] = gameSolution[row][column]
           }
           state.status = { state: "lost" }
@@ -93,14 +93,14 @@ export function select({ row, column }: Coord): GameState {
 }
 
 function chord(coord: Coord) {
-  let cell = state.game[coord.row][coord.column]
+  const cell = state.game[coord.row][coord.column]
   if (cell.status !== "open") {
     throw new Error("Called chord on a non-open cell!")
   }
 
   let adjFlags = 0
-  for (let n of neighbor(width, height, coord)) {
-    let neighborCell = state.game[n.row][n.column]
+  for (const n of neighbor(width, height, coord)) {
+    const neighborCell = state.game[n.row][n.column]
     if (neighborCell.status === "hidden" && neighborCell.flagged) {
       adjFlags += 1
     }
@@ -110,8 +110,8 @@ function chord(coord: Coord) {
   if (cell.adjMines !== adjFlags) return
 
   // Click on all non-flagged hidden neighbors, while the game is still playing
-  for (let n of neighbor(width, height, coord)) {
-    let neighborCell = state.game[n.row][n.column]
+  for (const n of neighbor(width, height, coord)) {
+    const neighborCell = state.game[n.row][n.column]
     if (state.status.state === "playing" && neighborCell.status === "hidden" && !neighborCell.flagged) {
       select(n)
     }
@@ -135,13 +135,13 @@ function selectEmptyCell(start: Coord) {
   }
 
   // Insert at start of array, remove from end of array
-  let queue = [start]
-  let visited = new Set([start])
+  const queue = [start]
+  const visited = new Set([start])
 
   while (queue.length !== 0) {
     // Will not be undefined, as we just checked length
-    let { row, column } = queue.pop()!
-    let cell = state.game[row][column]
+    const { row, column } = queue.pop()!
+    const cell = state.game[row][column]
 
     if (cell.status === "hidden") {
       // reveal cell
@@ -150,7 +150,7 @@ function selectEmptyCell(start: Coord) {
       if (!isEmpty({ row, column })) continue;
 
       // Enqueue neighbors if empty
-      for (let n of neighbor(width, height, { row, column })) {
+      for (const n of neighbor(width, height, { row, column })) {
         if (!visited.has(n)) {
           queue.unshift(n)
           visited.add(n)
@@ -161,12 +161,12 @@ function selectEmptyCell(start: Coord) {
 }
 
 function isEmpty(coord: Coord): boolean {
-  let cell = gameSolution[coord.row][coord.column]
+  const cell = gameSolution[coord.row][coord.column]
   return cell.status === "open" && cell.adjMines === 0
 }
 
 export function flag({ row, column }: Coord): GameState {
-  let cell = state.game[row][column]
+  const cell = state.game[row][column]
   if (cell.status === "hidden") {
     // Flip it, so flags can be removed or added
     cell.flagged = !cell.flagged

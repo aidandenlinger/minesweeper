@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-  export type GameConditions = {
+  export interface GameConditions {
     width: number;
     height: number;
     mineCount: number;
-  };
+  }
 </script>
 
 <script lang="ts">
@@ -27,9 +27,6 @@
   {#if !gameSettings}
     <Setup on:setup={saveSettings} />
   {:else}
-    <Game
-      {gameSettings}
-      on:reset={reset}
-    />
+    <Game {gameSettings} on:reset={reset} />
   {/if}
 </main>

@@ -7,10 +7,10 @@
 
   const dispatch = createEventDispatcher<{ setup: GameConditions }>();
 
-  type Difficulty = {
+  interface Difficulty {
     name: string;
     conds: GameConditions;
-  };
+  }
 
   let difficulties: Difficulty[] = [
     { name: "Beginner", conds: { width: 9, height: 9, mineCount: 10 } },
@@ -24,12 +24,21 @@
 </script>
 
 {#each difficulties as { name, conds }}
-  <button on:click={() => sendDifficulty(conds)} in:fade|global>
+  <button
+    on:click={() => {
+      sendDifficulty(conds);
+    }}
+    in:fade|global
+  >
     <strong>{name}</strong>
     ({conds.width}x{conds.height}, {conds.mineCount} mines)
   </button>
 {/each}
 
-<CustomSize on:custom={(e) => sendDifficulty(e.detail)} />
+<CustomSize
+  on:custom={(e) => {
+    sendDifficulty(e.detail);
+  }}
+/>
 
 <Options />

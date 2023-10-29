@@ -37,13 +37,13 @@ export function createGrid(width: number, height: number, mineCount: number, fir
   // get and set mine coordinates
   const mineCoords = getMineCoordinates(width, height, mineCount, firstClick, firstClickBehavior)
 
-  for (let { row, column } of mineCoords) {
+  for (const { row, column } of mineCoords) {
     grid[row][column] = { "status": "mine" }
   }
 
-  for (let mine of mineCoords) {
-    for (let { row, column } of neighbor(width, height, mine)) {
-      let n = grid[row][column];
+  for (const mine of mineCoords) {
+    for (const { row, column } of neighbor(width, height, mine)) {
+      const n = grid[row][column];
       if (n.status === "open") {
         n.adjMines += 1;
       }
@@ -55,9 +55,9 @@ export function createGrid(width: number, height: number, mineCount: number, fir
 
 function getMineCoordinates(width: number, height: number, mineCount: number, firstClick: Coord, firstClickBehavior: FirstClickBehavior): Coord[] {
   // First, we need all grid coordinates
-  const coordinates: Coord[] = new Array()
+  const coordinates: Coord[] = []
 
-  let bannedCells: Set<Coord> = new Set()
+  const bannedCells = new Set<Coord>()
 
   if (mineCount < width * height) {
     switch (firstClickBehavior) {

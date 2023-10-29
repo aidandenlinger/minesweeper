@@ -1,5 +1,5 @@
 export type Cell = { "status": "hidden", flagged: boolean } | { "status": "open", adjMines: number } | { "status": "mine" }
-export type Coord = { row: number, column: number }
+export interface Coord { row: number, column: number }
 
 export function* neighbor(width: number, height: number, { row, column }: Coord): Generator<Coord> {
   for (let neighRow = row - 1; neighRow <= row + 1; ++neighRow) {
