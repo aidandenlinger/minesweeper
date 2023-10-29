@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/strict-type-checked', 'plugin:@typescript-eslint/stylistic-type-checked', 'plugin:svelte/recommended'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/strict', 'plugin:@typescript-eslint/stylistic', 'plugin:svelte/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
