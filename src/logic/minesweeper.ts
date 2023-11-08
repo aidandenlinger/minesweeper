@@ -8,7 +8,11 @@ export interface GameState {
   status: Status,
 }
 
-export type FirstClickBehavior = "open cell" | "not mine" | "can be mine"
+const firstClickBehaviors = ["open cell", "not mine", "can be mine"] as const
+export type FirstClickBehavior = typeof firstClickBehaviors[number]
+export function isFirstClickBehavior(maybeBehavior: unknown): maybeBehavior is FirstClickBehavior {
+  return typeof maybeBehavior === 'string' && firstClickBehaviors.find((valid) => valid === maybeBehavior) !== undefined
+}
 
 let state: GameState
 let gameSolution: Cell[][]

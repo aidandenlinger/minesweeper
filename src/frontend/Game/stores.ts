@@ -1,12 +1,21 @@
 import { writable, type Writable } from 'svelte/store';
-import type { FirstClickBehavior } from '../../logic/minesweeper';
+import { isFirstClickBehavior, type FirstClickBehavior } from '../../logic/minesweeper';
 
-export const firstClickBehavior: Writable<FirstClickBehavior> = writable(localStorage.getItem("firstClickBehavior") as FirstClickBehavior ?? "open cell")
+const localFirstClickKey = "firstClickBehavior"
+const localFirstClick = localStorage.getItem(localFirstClickKey)
+export const firstClickBehavior: Writable<FirstClickBehavior> = writable(isFirstClickBehavior(localFirstClick) ? localFirstClick : "open cell")
 
-firstClickBehavior.subscribe((val) => localStorage.setItem("firstClickBehavior", val))
+firstClickBehavior.subscribe((val) => { localStorage.setItem(localFirstClickKey, val); })
 
-export type Theme = "light" | "dark"
+const themes = ["light", "dark"] as const
+export type Theme = typeof themes[number]
 
-export const currentTheme: Writable<Theme> = writable(localStorage.getItem("currentTheme") as Theme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"))
+function isTheme(maybeTheme: unknown): maybeTheme is Theme {
+  return typeof maybeTheme === 'string' && themes.find((valid) => valid === maybeTheme) !== undefined
+}
 
-currentTheme.subscribe((theme) => localStorage.setItem("currentTheme", theme))
+const localThemeKey = "currentTheme"
+const localTheme = localStorage.getItem(localThemeKey)
+export const currentTheme: Writable<Theme> = writable(isTheme(localTheme) ? localTheme : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"))
+
+currentTheme.subscribe((theme) => { localStorage.setItem(localThemeKey, theme); })
