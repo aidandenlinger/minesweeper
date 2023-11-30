@@ -12,17 +12,17 @@
   },
   "devDependencies": {
     "@picocss/pico": "^1.5.10",
-    "@sveltejs/vite-plugin-svelte": "^2.4.6",
+    "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "@tsconfig/svelte": "^5.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
-    "eslint": "^8.53.0",
-    "eslint-plugin-svelte": "^2.35.0",
-    "svelte": "^4.2.2",
-    "svelte-check": "^3.5.2",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "eslint-plugin-svelte": "^2.35.1",
+    "svelte": "^4.2.7",
+    "svelte-check": "^3.6.2",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2",
-    "typescript-svelte-plugin": "^0.3.34",
-    "vite": "^4.5.0"
+    "typescript": "^5.3.2",
+    "typescript-svelte-plugin": "^0.3.36",
+    "vite": "^5.0.4"
   }
 }
