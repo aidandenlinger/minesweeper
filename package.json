@@ -11,7 +11,7 @@
     "lint": "eslint --ext .ts,.svelte src"
   },
   "devDependencies": {
-    "@picocss/pico": "^1",
+    "@picocss/pico": "^2",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@tsconfig/svelte": "^5.0.2",
     "@typescript-eslint/eslint-plugin": "^7.0.1",

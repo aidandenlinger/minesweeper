@@ -42,3 +42,10 @@
 />
 
 <Options />
+
+<style>
+  button {
+    width: 100%;
+    margin-bottom: var(--pico-spacing);
+  }
+</style>

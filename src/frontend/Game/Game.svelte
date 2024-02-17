@@ -87,7 +87,7 @@
   }
 
   #mineCount {
-    padding-top: var(--spacing);
+    padding-top: var(--pico-spacing);
   }
 
   p {

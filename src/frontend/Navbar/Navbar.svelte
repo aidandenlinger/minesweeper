@@ -61,6 +61,6 @@
 	}
 
 	nav {
-		margin: var(--spacing) 0;
+		margin: var(--pico-spacing) 0;
 	}
 </style>
