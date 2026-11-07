@@ -3,19 +3,15 @@
 ![An image of a minesweeper game](docs/minesweeper.png)
 
 A minimal Minesweeper clone written for desktop browsers using Svelte and
-picoCSS. [Play here!](https://minesweeper.denlinger.dev/)
+picoCSS.
 
 ## Install
-If you don't want to install anything, you can [play it 
-online.](https://minesweeper.denlinger.dev/)
-
 To install locally, you will need to install [pnpm](https://pnpm.io/), which is
-the package  manager for this repo. With `pnpm` installed, run `pnpm install` to
+the package manager for this repo. With `pnpm` installed, run `pnpm install` to
 install the project's dependencies.
 
 ## Usage
-[Visit the website](https://minesweeper.denlinger.dev/), or if you're
-running locally, run `pnpm run dev` to start a local development server. To
+Run `pnpm run dev` to start a local development server. To
 get the final files, run `pnpm run build` to build the project, and serve the
 resulting `dist` server as a website.
 
